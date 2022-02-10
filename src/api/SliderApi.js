@@ -17,9 +17,9 @@ axios.defaults.baseURL = BASE_URL;
 export async function GetSlider() {
     try {
       const response = await axios.get('/');
-      return response;
+      return response.data;
     } catch (e) {
-      return e;
+      return Promise.reject(e);
     }
    }
    

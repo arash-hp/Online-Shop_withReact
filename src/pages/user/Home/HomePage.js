@@ -1,46 +1,53 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import {toast} from 'react-toastify';
-import {getSlides} from '../../../redux/actions/SlideAction';
+import { toast } from 'react-toastify';
+import { getSlides } from '../../../redux/actions/SlideAction';
 import store from '../../../redux/store';
-
+import { Slider } from './components/Slider/SliderComponent';
 class HomePage extends Component {
 
-    componentDidMount(){
-        console.log('store :',store.getState().articles,this.props);
+    componentDidMount() {
+        console.log('store :', store.getState());
 
-        try{
+        try {
             this.props.getSlides()
-        }catch(e){
+        } catch (e) {
             toast.error('Error on get slides')
         }
 
-        this.props.getSlides()
+        this.props.getSlides().then(res => console.log('store 2:',res))
     }
 
     render() {
+        // console.log('props', this.props)
+        // console.log('DATA',this.props.slides)
+
         return <>
             <Helmet>
                 title | Home
             </Helmet>
-            <div>HomePage</div>
+            <div>
+                HomePage
+                <Slider data={this.props.slides} />
+            </div>
         </>
     }
 
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
     return {
-        articles: state.articles,
+        // articles: state.article.articles,
+        slides: state.slide.slides
     }
 };
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
     return {
-        getSlides:()=> dispatch(getSlides())    
+        getSlides: () => dispatch(getSlides())
     }
 }
-const Home = connect(mapStateToProps,mapDispatchToProps)(HomePage)
+const Home = connect(mapStateToProps, mapDispatchToProps)(HomePage)
 
-export {Home}
+export { Home }
 

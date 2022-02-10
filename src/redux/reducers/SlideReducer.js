@@ -1,9 +1,14 @@
 const initialState = {
-    slides:[]
+    slides: []
 };
 
 const SlideReducer = (state = initialState, action) => {
-    return state
+    switch (action.type) {
+        case 'SLIDE_SET_SLIDES':
+            return { ...state, slides: action.payload };
+        default:
+            return state
+    }
 };
 
 export { SlideReducer }

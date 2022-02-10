@@ -5,7 +5,7 @@ import { ArticleReducer, SlideReducer } from './reducers';
 
 const reducers = combineReducers({
     article: ArticleReducer,
-    slid: SlideReducer
+    slide: SlideReducer
 })
 
 //this is for devtools extensions
