@@ -1,61 +1,70 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute } from "./components";
 import { PATHS } from "../configs/RoutesConfig";
-import { DashboardPage, OrdersPage, ProductManagementPage, StockPage } from "../pages/management";
-import { HomePage, CardPage, CategoriesPage, FinalizePage, ResultPayingPage, ProductionUserPage } from "../pages/user";
+import { DashboardPage, OrdersPage, ProductManagementPage, StockPage, LoginPage } from "../pages/management";
+import { Home, CardPage, CategoriesPage, FinalizePage, ResultPayingPage, ProductionUserPage } from "../pages/user";
+import { PrivateRout } from "./components/PrivateRoute/PrivateRouteComponent";
 export const AppRoute = () => {
     return (
         <Routes>
-            <Route path={PATHS.HOME} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <HomePage {...props} />} />} />;
-            
-            <Route path={PATHS.CARD} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <CardPage {...props} />} />} />;
-            
-            <Route path={PATHS.CATEGORIES} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <CategoriesPage {...props} />} />} />;
-            
-            <Route path={PATHS.FINALIZE} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <FinalizePage {...props} />} />} />;
-            
-            <Route path={PATHS.PRODUCTION} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <ProductionUserPage {...props} />} />} />;
-            
-            <Route path={PATHS.RESULT_PAYING} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <ResultPayingPage {...props} />} />} />;
-            
-            <Route path={PATHS.DASHBOARD} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <DashboardPage {...props} />} />} />;
-            
-            <Route path={PATHS.ORDERS} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <OrdersPage {...props} />} />} />;
-            
-            <Route path={PATHS.PRODUCT_MANAGEMENT} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <ProductManagementPage {...props} />} />} />;
-            
-            <Route path={PATHS.STOCK} 
-            element={<PublicRoute 
-            MyComponent={(props) => 
-            <StockPage {...props} />} />} />;
-            
+            <Route path={PATHS.HOME}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <Home />} />} />;
+
+            <Route path={PATHS.CARD}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <CardPage />} />} />;
+
+            <Route path={PATHS.CATEGORIES}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <CategoriesPage />} />} />;
+
+            <Route path={PATHS.FINALIZE}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <FinalizePage />} />} />;
+
+            <Route path={PATHS.PRODUCTION}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <ProductionUserPage />} />} />;
+
+            <Route path={PATHS.RESULT_PAYING}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <ResultPayingPage />} />} />;
+
+            <Route path={PATHS.DASHBOARD}
+                element={<PrivateRout
+                    MyComponent={() =>
+                        <DashboardPage />} />} />;
+
+            <Route path={PATHS.ORDERS}
+                element={<PrivateRout
+                    MyComponent={() =>
+                        <OrdersPage />} />} />;
+
+            <Route path={PATHS.PRODUCT_MANAGEMENT}
+                element={<PrivateRout
+                    MyComponent={() =>
+                        <ProductManagementPage />} />} />;
+
+            <Route path={PATHS.STOCK}
+                element={<PrivateRout
+                    MyComponent={() =>
+                        <StockPage />} />} />;
+
+            <Route path={PATHS.LOGIN}
+                element={<PublicRoute
+                    MyComponent={() =>
+                        <LoginPage />} />} />;
+
+            <Route path={PATHS.NAVIGATE}
+                element={<Navigate to={PATHS.HOME} />} />
+
         </Routes>
     )
 }

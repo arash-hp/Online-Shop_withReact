@@ -9,4 +9,6 @@ export const PATHS = {
     ORDERS:'/orders',
     PRODUCT_MANAGEMENT:'/product_management',    
     STOCK : '/stock',
+    LOGIN : '/login',
+    NAVIGATE:'*',
 }
