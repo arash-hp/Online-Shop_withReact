@@ -28,7 +28,6 @@ export const NavigationComponent = () => {
  
     const handleClose=()=>{
         setAnchorEl(null)
-        console.log('ohhhhh')
     }
 
     const handleClickPage = ()=>{

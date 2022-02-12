@@ -1,15 +1,15 @@
-import { DEFAULT_PROPS, PROP_TYPES } from "./PrivateRouteConfig";
 import { Navigate } from "react-router-dom";
 import { PATHS } from "../../../configs/RoutesConfig";
-import { IS_LOGGED_IN } from "../../../configs/VariablesConfig";
+import { IS_LOGGED_IN } from "../../../configs/VariablesConfig"
 import { MainLayout } from "../../../layouts";
-;
+import { DEFAULT_PROPS, PROP_TYPES } from "./ProtectedRouteConfig";
 
-export const PrivateRoute = (props) => {
+
+export const ProtectedRoute = (props) => {
     const isLoggedIn =localStorage.getItem(IS_LOGGED_IN) === 'true';
 
-    if (!isLoggedIn) {
-        return <Navigate replace to={PATHS.LOGIN} />
+    if (isLoggedIn) {
+        return <Navigate replace to={PATHS.DASHBOARD} />
     }
 
     const { Component , hasLayout } = props;
@@ -25,5 +25,6 @@ export const PrivateRoute = (props) => {
     )
 }
 
-PrivateRoute.defaultProps = DEFAULT_PROPS;
-PrivateRoute.propTypes = PROP_TYPES;
+
+ProtectedRoute.defaultProps = DEFAULT_PROPS;
+ProtectedRoute.propTypes = PROP_TYPES;

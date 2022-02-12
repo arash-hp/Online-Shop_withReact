@@ -1,9 +1,9 @@
 import { MainLayout } from "../../../layouts"
 
-export const PublicRoute = ({ MyComponent, flag }) => {
+export const PublicRoute = ({Component}) => {
     return <>
         <MainLayout>
-            <MyComponent />
+            <Component />
         </MainLayout>
     </>
 }
