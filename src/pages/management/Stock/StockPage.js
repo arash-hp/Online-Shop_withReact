@@ -1,4 +1,5 @@
 import Helmet from "react-helmet";
+import { DataTable } from "./components/DataTable/DataTableComponent";
 
 export const StockPage = () => {
     return <>
@@ -8,5 +9,6 @@ export const StockPage = () => {
             </title>
         </Helmet>
         <div>StockPage</div>
+        <DataTable />
     </>
 }

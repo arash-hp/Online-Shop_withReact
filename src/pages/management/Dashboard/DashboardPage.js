@@ -4,6 +4,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { getSlides } from "../../../redux/actions/SlideAction";
 import store from "../../../redux/store";
 import { Information } from "./components/Information/Information.component";
+import { DataTable } from "./components/Information/DataTable/DataTableComponent";
 
 export const DashboardPage = () => {
 
@@ -19,8 +20,9 @@ export const DashboardPage = () => {
                 Page | Dashboard
             </title>
         </Helmet>
+        {/* <Information /> */}
         <div>DashboardPage</div>
-        <Information />
+        <DataTable />
     </>
 }
 
