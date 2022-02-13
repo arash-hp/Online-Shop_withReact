@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import http from 'services/http.service';
+import http from '../services/http.service';
 import {BASE_URL} from '../configs/VariablesConfig';
 
 
@@ -16,7 +16,7 @@ axios.defaults.baseURL = BASE_URL;
 
 export async function GetSlider() {
     try {
-      const response = await axios.get('/');
+      const response = await http.get('/products');
       return response.data;
     } catch (e) {
       return Promise.reject(e);

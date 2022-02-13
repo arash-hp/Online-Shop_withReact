@@ -1,0 +1,12 @@
+.root{
+    background: rgb(226, 226, 226);
+    box-shadow: 0 0px 5px rgba(110, 110, 110, 0.25), 0 10px 10px rgba(126, 126, 126, 0.22);
+    padding: 16px;
+    border-radius: 8px;
+    .information_box{
+        th{
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.541);
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
 const Slider = (props) => {
   const [state, setState] = useState({ isShow: false, text: 'aaaa' });
@@ -33,12 +34,15 @@ const Slider = (props) => {
               <li key={slide.id}>
                 <img src={slide.courseImage} alt="" uk-cover="true" />
                 <div className="uk-position-bottom uk-position-medium uk-text-center uk-light">
-                  <h3 className="uk-margin-remove" uk-slideshow-parallax="x: 100,-100">{slide.title}</h3>
+                  <h3 className="uk-margin-remove" uk-slideshow-parallax="x: 100,-100">{slide.brand}</h3>
+                </div>
+                <div className="uk-position-bottom uk-position-medium uk-text-center uk-light">
+                  <h3 className="uk-margin-remove" uk-slideshow-parallax="x: 100,-100">{slide.Name}</h3>
                 </div>
               </li>
             ))
           }
-        }
+
         </ul>
 
         <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="true"
@@ -84,4 +88,11 @@ const Slider = (props) => {
 //   }
 // }
 
-export { Slider };
+const mapStateToProps = (state) => {
+  return {
+    // articles: state.article.articles,
+    data: state.slide.slides
+  }
+};
+const ConnectedSlier = connect(mapStateToProps)(Slider)
+export { ConnectedSlier as Slider};

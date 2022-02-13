@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute, ProtectedRoute ,PrivateRoute } from "./components";
 import { PATHS } from "../configs/RoutesConfig";
 import { Home, CardPage, CategoriesPage, FinalizePage, ResultPayingPage, ProductionUserPage } from "../pages/user";
-import { DashboardPage, LoginPage } from '../pages/management/index';
+import { DashboardPage, LoginPage, OrdersPage, StockPage } from '../pages/management/index';
 import {  } from "./components/ProtectRout/ProtectedRouteComponent";
 
 export const AppRoute = () => {
@@ -24,9 +24,9 @@ export const AppRoute = () => {
                 Component={() =>
                     <FinalizePage />} />} />;
 
-            <Route path={PATHS.PRODUCTION} element={<PublicRoute
+            {/* <Route path={PATHS.PRODUCTION} element={<PublicRoute
                 Component={() =>
-                    <ProductionUserPage />} />} />;
+                    <ProductionUserPage />} />} />; */}
 
             <Route path={PATHS.RESULT_PAYING} element={<PrivateRoute
                 Component={() =>
@@ -34,6 +34,12 @@ export const AppRoute = () => {
 
             <Route path={PATHS.DASHBOARD} element={<PrivateRoute
                 Component={() => <DashboardPage />} />} />;
+
+            <Route path={PATHS.STOCK} element={<PrivateRoute
+                Component={() => <StockPage />} />} />;
+
+            <Route path={PATHS.ORDERS} element={<PrivateRoute
+                Component={() => <OrdersPage />} />} />;
 
             <Route path={PATHS.LOGIN} element={<ProtectedRoute
                 Component={() =>

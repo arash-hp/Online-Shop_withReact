@@ -2,8 +2,7 @@ import { DEFAULT_PROPS, PROP_TYPES } from "./PrivateRouteConfig";
 import { Navigate } from "react-router-dom";
 import { PATHS } from "../../../configs/RoutesConfig";
 import { IS_LOGGED_IN } from "../../../configs/VariablesConfig";
-import { MainLayout } from "../../../layouts";
-;
+import { ManagementLayout } from "../../../layouts";
 
 export const PrivateRoute = (props) => {
     const isLoggedIn =localStorage.getItem(IS_LOGGED_IN) === 'true';
@@ -13,11 +12,10 @@ export const PrivateRoute = (props) => {
     }
 
     const { Component , hasLayout } = props;
-    console.log('private:',props)
     return (
         <>
             {hasLayout ?
-                (<MainLayout> <Component /> </MainLayout>)
+                (<ManagementLayout> <Component /> </ManagementLayout>)
                 :
                 <Component />
             }

@@ -8,20 +8,20 @@ import { Slider } from './components/Slider/SliderComponent';
 class HomePage extends Component {
 
     componentDidMount() {
-        console.log('store :', store.getState());
+        // console.log('storeHomePage :', store.getState());
 
-        try {
+        // try {
             this.props.getSlides()
-        } catch (e) {
-            toast.error('Error on get slides')
-        }
+        // } catch (e) {
+        //     toast.error('Error on get slides')
+        // }
 
-        this.props.getSlides().then(res => console.log('store 2:',res))
+        // this.props.getSlides().then(res => console.log('store 2:',res))
     }
 
     render() {
         // console.log('props', this.props)
-        // console.log('DATA',this.props.slides)
+        console.log('DATA',this.props.slides)
 
         return <>
             <Helmet>
@@ -29,25 +29,25 @@ class HomePage extends Component {
             </Helmet>
             <div>
                 HomePage
-                <Slider data={this.props.slides} />
+                <Slider />
             </div>
         </>
     }
 
 }
-const mapStateToProps = (state) => {
-    return {
-        // articles: state.article.articles,
-        slides: state.slide.slides
-    }
-};
+// const mapStateToProps = (state) => {
+//     return {
+//         // articles: state.article.articles,
+//         slides: state.slide.slides
+//     }
+// };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getSlides: () => dispatch(getSlides())
     }
 }
-const Home = connect(mapStateToProps, mapDispatchToProps)(HomePage)
+const Home = connect(null, mapDispatchToProps)(HomePage)
 
 export { Home }
 

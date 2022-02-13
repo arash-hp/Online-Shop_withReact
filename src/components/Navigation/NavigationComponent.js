@@ -7,11 +7,10 @@ import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+// import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import styles from './NavigationComponent.module.scss';
 import { Navigate } from 'react-router-dom';
 import { PATHS } from '../../configs/RoutesConfig';
@@ -22,29 +21,31 @@ export const NavigationComponent = () => {
 
     const openMenu = Boolean(anchorEl)
 
-    const handleClick = (e)=>{
+    const handleClick = (e) => {
         setAnchorEl(e.currentTarget)
     }
- 
-    const handleClose=()=>{
+
+    const handleClose = () => {
         setAnchorEl(null)
     }
 
-    const handleClickPage = ()=>{
+    const handleClickPage = () => {
         <Navigate replace to={PATHS.LOGIN} />
     }
     return <>
         <Box dir="rtl" className={styles.root} sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block', fontWeight: 'bold' } }}
-                    >
-                        Camping&Hiking
-                    </Typography>
+                    <Link to={PATHS.HOME}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: { xs: 'none', sm: 'block', fontWeight: 'bold' } }}
+                        >
+                            Camping&Hiking
+                        </Typography>
+                    </Link>
                     <Box sx={{ display: 'flex' }}>
                         <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}>کوهنوردی</Typography>
                         <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}>کمپینگ</Typography>
@@ -56,9 +57,9 @@ export const NavigationComponent = () => {
                         >لباس</Typography>
                         {/*Dropdown Items */}
                         <Menu id='basic-menu'
-                        anchorEl={anchorEl}
-                        open={openMenu}
-                        onClose={handleClose}> 
+                            anchorEl={anchorEl}
+                            open={openMenu}
+                            onClose={handleClose}>
                             <MenuItem onClick={handleClose}>مرد</MenuItem>
                             <MenuItem onClick={handleClose}>زن</MenuItem>
                         </Menu>
@@ -75,20 +76,21 @@ export const NavigationComponent = () => {
                                 <ShoppingCartIcon />
                             </Badge>
                         </IconButton>
-                        
-                        <IconButton
-                            color="inherit"
-                            onClick={handleClickPage}
-                        >
-                            <ManageAccountsIcon
-                                sx={{ fontSize: 30 }}
-                            />
-                            
-                        </IconButton>
+
+                        <Link to={PATHS.LOGIN} color='inherit'>
+                            <IconButton
+                                color="inherit"
+                                onClick={handleClickPage}
+                            >
+                                <ManageAccountsIcon
+                                    sx={{ fontSize: 30 }}
+                                />
+                            </IconButton>
+                        </Link>
                     </Box>
                 </Toolbar>
             </AppBar>
-        
+
         </Box>
     </>
 }
