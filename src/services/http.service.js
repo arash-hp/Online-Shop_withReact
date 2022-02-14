@@ -1,6 +1,7 @@
 import  axios  from 'axios';
 import { ACCESS_TOKEN, BASE_URL, IS_LOGGED_IN } from '../configs/VariablesConfig';
 import { GetSlider } from '../api/SliderApi';
+import { toast } from 'react-toastify';
 
 
 class HttpService {
@@ -8,22 +9,19 @@ class HttpService {
         axios.defaults.baseURL = BASE_URL;
 
         axios.interceptors.request.use((config) => {
-            // const token = localStorage.getItem(ACCESS_TOKEN);
-            // if (config.url !== LOGIN) {
-            //     config.headers['token'] = `${token}`
-            // }
 
             return config;
-        }, (error) => {
-            return Promise.reject(error);
         });
 
         axios.interceptors.response.use((response) => {
+            console.log('response response')
             return response;
         },
             (error) => {
-               
-                return Promise.reject(error);
+                toast.error(error.data)
+                console.dir('response error'+  error)
+
+                // return Promise.reject(error);
             })
     }
     get(url, config) {

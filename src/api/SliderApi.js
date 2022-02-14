@@ -1,9 +1,7 @@
 import axios from 'axios';
 import http from '../services/http.service';
-import {BASE_URL} from '../configs/VariablesConfig';
 
 
-axios.defaults.baseURL = BASE_URL;
 
 
 // export function GetSlider() {

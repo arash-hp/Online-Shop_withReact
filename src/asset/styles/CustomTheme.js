@@ -7,25 +7,25 @@ export const CustomTheme = createTheme({
         typography: {
             fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             h1: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
             h2: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
             h3: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
             h4: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
             h5: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
             h6: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
             strong: {
-                fontFamily: '"Vazir", "Helvetica", "Arial", sans-serif',
+                fontFamily: '"IranSanse", "Helvetica", "Arial", sans-serif',
             },
         },
     }

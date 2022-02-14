@@ -13,7 +13,6 @@ export const ProtectedRoute = (props) => {
     }
 
     const { Component , hasLayout } = props;
-    console.log('private:',props)
     return (
         <>
             {hasLayout ?

@@ -47,7 +47,7 @@ export const NavigationComponent = () => {
                         </Typography>
                     </Link>
                     <Box sx={{ display: 'flex' }}>
-                        <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}>کوهنوردی</Typography>
+                        <Typography sx={{ marginRight: '20px', cursor: 'pointer' }} variant='body2' >کوهنوردی</Typography>
                         <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}>کمپینگ</Typography>
                         <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}
                             aria-controls='basic-menu'

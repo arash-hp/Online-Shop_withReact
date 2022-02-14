@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -8,6 +8,10 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Helmet } from 'react-helmet';
+import { ControlCameraSharp } from '@mui/icons-material';
+import { connect } from 'react-redux';
+import { login } from '../../../redux/actions/UserAction';
+
 
 const validationSchema = yup.object({
     text: yup
@@ -20,17 +24,19 @@ const validationSchema = yup.object({
         .required('Password is required'),
 });
 
-export const LoginPage = () => {
+const LoginComponent = () => {
+
     const formik = useFormik({
         initialValues: {
             text: '',
             password: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             alert(JSON.stringify(values, null, 2));
-        },
+        }
     });
+
 
     return (
         <div>
@@ -48,7 +54,7 @@ export const LoginPage = () => {
             >
                 <IconButton>
                     <ManageAccountsIcon
-                        sx={{ fontSize: 60 ,opacity:.8}}
+                        sx={{ fontSize: 60, opacity: .8 }}
                     />
                 </IconButton>
                 <form onSubmit={formik.handleSubmit} >
@@ -61,7 +67,7 @@ export const LoginPage = () => {
                         onChange={formik.handleChange}
                         error={formik.touched.text && Boolean(formik.errors.text)}
                         helperText={formik.touched.text && formik.errors.text}
-                        // InputLabelProps={{style:{position:'absolute',right:0}}}
+                    // InputLabelProps={{style:{position:'absolute',right:0}}}
 
                     />
                     <TextField
@@ -74,7 +80,7 @@ export const LoginPage = () => {
                         onChange={formik.handleChange}
                         error={formik.touched.password && Boolean(formik.errors.password)}
                         helperText={formik.touched.password && formik.errors.password}
-                        // InputLabelProps={{style:{position:'absolute',right:0}}}
+                    // InputLabelProps={{style:{position:'absolute',right:0}}}
 
                     />
                     <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginTop: 40 }}>
@@ -85,3 +91,12 @@ export const LoginPage = () => {
         </div>
     );
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (data) => dispatch(login(data))
+    }
+}
+const LoginPage = connect(null, mapDispatchToProps)(LoginComponent)
+
+export { LoginPage }

@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute, ProtectedRoute ,PrivateRoute } from "./components";
 import { PATHS } from "../configs/RoutesConfig";
 import { Home, CardPage, CategoriesPage, FinalizePage, ResultPayingPage, ProductionUserPage } from "../pages/user";
-import { DashboardPage, LoginPage, OrdersPage, StockPage } from '../pages/management/index';
+import { DashboardPage, LoginPage, OrdersPage, SignInPage, StockPage } from '../pages/management/index';
 import {  } from "./components/ProtectRout/ProtectedRouteComponent";
 
 export const AppRoute = () => {
@@ -43,7 +43,7 @@ export const AppRoute = () => {
 
             <Route path={PATHS.LOGIN} element={<ProtectedRoute
                 Component={() =>
-                    <LoginPage />} />} />;
+                    <SignInPage />} />} />;
 
             <Route path={PATHS.NAVIGATE} element={<Navigate to={PATHS.HOME} />} />
 
