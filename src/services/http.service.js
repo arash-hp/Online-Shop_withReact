@@ -14,12 +14,11 @@ class HttpService {
         });
 
         axios.interceptors.response.use((response) => {
-            console.log('response response')
             return response;
         },
             (error) => {
-                toast.error(error.data)
-                console.dir('response error'+  error)
+                // toast.error(error.data)
+                // console.dir('response error'+  error)
 
                 // return Promise.reject(error);
             })

@@ -4,10 +4,10 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../../redux/actions/UserAction';
+import { ACCESS_TOKEN } from '../../../configs/VariablesConfig';
 
 const SignIn = props => {
   const formRef = useRef();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +15,17 @@ const SignIn = props => {
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
 
-    await props.login(data)
+    try {
+
+      const response = await props.login(data)
+      // localStorage.sentItem(ACCESS_TOKEN , response.token)
+
+      console.log('submit', response.token);
+
+    } catch (e) {
+
+    }
+
   };
   // setFormData(data);
   //   try {
