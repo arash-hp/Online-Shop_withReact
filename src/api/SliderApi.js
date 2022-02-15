@@ -1,16 +1,4 @@
-import axios from 'axios';
 import http from '../services/http.service';
-
-
-
-
-// export function GetSlider() {
-//   return new Promise((resolve, reject) => {
-//     axios.get('http://localhost:3002/products')
-//       .then(response => resolve(response))
-//       .catch(error => reject(error))
-//   });
-// }
 
 export async function GetSlider() {
     try {

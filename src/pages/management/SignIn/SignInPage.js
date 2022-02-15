@@ -2,28 +2,31 @@ import { PATHS } from '../../../configs/RoutesConfig';
 import { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../../redux/actions/UserAction';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { login, whoami } from '../../../redux/actions/UserAction';
 import { ACCESS_TOKEN } from '../../../configs/VariablesConfig';
+import { ControlCameraSharp } from '@mui/icons-material';
 
 const SignIn = props => {
   const formRef = useRef();
+  const  navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
-
     try {
 
-      const response = await props.login(data)
+      const response = props.login(data).then((response) => {
+        navigate(PATHS.DASHBOARD);
+      });
       // localStorage.sentItem(ACCESS_TOKEN , response.token)
 
       console.log('submit', response.token);
 
     } catch (e) {
-
+      console.log('loginErrror')
     }
 
   };

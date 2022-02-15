@@ -6,7 +6,6 @@ import { ManagementLayout } from "../../../layouts";
 
 export const PrivateRoute = (props) => {
     const isLoggedIn =localStorage.getItem(IS_LOGGED_IN) === 'true';
-
     if (!isLoggedIn) {
         return <Navigate replace to={PATHS.LOGIN} />
     }

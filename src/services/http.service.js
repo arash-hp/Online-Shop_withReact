@@ -1,7 +1,13 @@
-import  axios  from 'axios';
+import axios from 'axios';
 import { ACCESS_TOKEN, BASE_URL, IS_LOGGED_IN } from '../configs/VariablesConfig';
 import { GetSlider } from '../api/SliderApi';
 import { toast } from 'react-toastify';
+import { LOGIN, WHOAMI } from '../configs/UrlConfig';
+import history from './history.service';
+import { PATHS } from '../configs/RoutesConfig';
+import errorMap from '../asset/data/error-map.json';
+import store from '../redux/store';
+import { refreshToken } from '../redux/actions/UserAction';
 
 
 class HttpService {
@@ -9,18 +15,51 @@ class HttpService {
         axios.defaults.baseURL = BASE_URL;
 
         axios.interceptors.request.use((config) => {
+            const token = localStorage.getItem(ACCESS_TOKEN)
+            if (config.url !== LOGIN && (config.url === WHOAMI || token)) {
+                config.headers['token'] = `${token}`
+            }
 
             return config;
+        }, (error) => {
+            return Promise.reject(error);
         });
 
         axios.interceptors.response.use((response) => {
+            console.log('interceptor :',response)
             return response;
         },
-            (error) => {
-                // toast.error(error.data)
-                // console.dir('response error'+  error)
+             (error) => {
+                if (!error.response) return Promise.reject(error)
+                    ;
+                    console.log('cervice ',error)
 
-                // return Promise.reject(error);
+                // const originalRequest = error.config;
+                // console.log('error' , originalRequest);
+                if (error.response.status === 401) {
+
+                    // try {
+                    //     await store.dispatch(refreshToken)
+
+                    //     axios.request(originalRequest).then((res) => {
+                    //         console.log('res originalRequest ;',res)
+                    //     }).catch(e => {
+
+                    //     })
+                    // } catch (e) {
+
+                    // }
+
+
+                    console.log('error 401')
+
+                    localStorage.setItem(IS_LOGGED_IN, false.toString());
+                    history.push(PATHS.LOGIN)
+
+                } else {
+                    toast.error(errorMap[error.response.status])
+                }
+                return Promise.reject(error);
             })
     }
     get(url, config) {

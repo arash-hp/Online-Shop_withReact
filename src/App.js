@@ -1,5 +1,5 @@
 import { AppRoute } from './route/AppRoute';
-import { BrowserRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as BrowserRouter } from 'react-router-dom';
 import { StyleSheetManager } from 'styled-components';
 import rtlPlugin from 'stylis-plugin-rtl';
 
@@ -10,13 +10,27 @@ import './asset/fonts/FontIran/FontIran.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
-import { StylesProvider, jssPreset ,ThemeProvider} from '@material-ui/core/styles';
+import { StylesProvider, jssPreset, ThemeProvider } from '@material-ui/core/styles';
 import { CustomTheme } from './asset/styles/CustomTheme';
 
 
 import './App.css';
+import { whoami } from './redux/actions/UserAction';
+import history from './services/history.service';
 
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+const initApp = async () => {
+  try {
+    console.log('init')
+    await store.dispatch(whoami())
+  } catch (e) {
+    return Promise.reject(e);
+
+  }
+}
+
+(() => initApp())()
 
 function App() {
   return <>
@@ -25,7 +39,7 @@ function App() {
       <StylesProvider jss={jss} >
         <ThemeProvider theme={CustomTheme}>
           <StyleSheetManager stylisPlugins={[rtlPlugin]}>
-            <BrowserRouter>
+            <BrowserRouter history={history}>
               <AppRoute />
               <ToastContainer
                 position='bottom-left'
