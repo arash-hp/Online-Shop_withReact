@@ -2,20 +2,21 @@ import axios from 'axios';
 import { ACCESS_TOKEN, BASE_URL, IS_LOGGED_IN } from '../configs/VariablesConfig';
 import { GetSlider } from '../api/SliderApi';
 import { toast } from 'react-toastify';
-import { LOGIN, WHOAMI } from '../configs/UrlConfig';
+import { LOGIN, REFRESH_TOKEN, WHOAMI } from '../configs/UrlConfig';
 import history from './history.service';
 import { PATHS } from '../configs/RoutesConfig';
 import errorMap from '../asset/data/error-map.json';
 import store from '../redux/store';
 import { refreshToken } from '../redux/actions/UserAction';
 
+let canRefresh = true;
 
 class HttpService {
     constructor() {
         axios.defaults.baseURL = BASE_URL;
 
         axios.interceptors.request.use((config) => {
-            const token = localStorage.getItem(ACCESS_TOKEN)
+            const token = localStorage.getItem(config.url !== REFRESH_TOKEN ? ACCESS_TOKEN : REFRESH_TOKEN)
             if (config.url !== LOGIN && (config.url === WHOAMI || token)) {
                 config.headers['token'] = `${token}`
             }
@@ -26,36 +27,35 @@ class HttpService {
         });
 
         axios.interceptors.response.use((response) => {
-            console.log('interceptor :',response)
+            // console.log('interceptor :', response)
+            // canRefresh = true;
             return response;
         },
-             (error) => {
+            async (error) => {
                 if (!error.response) return Promise.reject(error)
                     ;
-                    console.log('cervice ',error)
-
-                // const originalRequest = error.config;
-                // console.log('error' , originalRequest);
+                const originalRequest = error.config;
+                console.log('error', originalRequest);
                 if (error.response.status === 401) {
+                    if (canRefresh) {
+                        canRefresh= false;
+                        try {
+                            await store.dispatch(refreshToken());
+                            return new Promise((resolve, reject) => {
+                                axios.request(originalRequest).then((res) => {
+                                    console.log('res originalRequest ;', res)
+                                    resolve(res)
+                                }).catch(e => {
+                                    reject(e)
+                                })
+                            });
 
-                    // try {
-                    //     await store.dispatch(refreshToken)
-
-                    //     axios.request(originalRequest).then((res) => {
-                    //         console.log('res originalRequest ;',res)
-                    //     }).catch(e => {
-
-                    //     })
-                    // } catch (e) {
-
-                    // }
-
-
-                    console.log('error 401')
-
-                    localStorage.setItem(IS_LOGGED_IN, false.toString());
-                    history.push(PATHS.LOGIN)
-
+                        } catch (e) {
+                             localStorage.setItem(IS_LOGGED_IN, false.toString());
+                            history.push(PATHS.LOGIN)
+                            return Promise.reject(error)
+                        }
+                    }
                 } else {
                     toast.error(errorMap[error.response.status])
                 }
