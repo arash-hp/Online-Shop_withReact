@@ -1,12 +1,51 @@
-.root{
-    background: rgb(226, 226, 226);
-    box-shadow: 0 0px 5px rgba(110, 110, 110, 0.25), 0 10px 10px rgba(126, 126, 126, 0.22);
-    padding: 16px;
-    border-radius: 8px;
-    .information_box{
-        th{
-            font-size: 18px;
-            color: rgba(0, 0, 0, 0.541);
+.root {
+    .title {
+     display: flex;  
+     align-items: center;
+     justify-content: space-between;
+     margin: 0 60px;
+
+        button {
+            background: #1976d2;
+            color: #ffffff;
+            border: none;
+            width: 120px;
+            height: 30px;
+            margin: 4px;
+            border-radius: 4px;
+            transition: all 0.1s ease-in;
+            cursor: pointer;
+            &:active {
+                background: #ffffff;
+                color: #1976d2;
+            }
+        }
+    }
+
+    .information_box {
+        background: rgb(225, 234, 253);
+        box-shadow: 0 0px 5px rgba(110, 110, 110, 0.25);
+        padding: 16px;
+        border-radius: 4px;
+        margin: 8px 32px;
+        table {
+            width: 100%;
+            th {
+                border: 1px solid rgba(0, 0, 0, 0.082);
+                padding: 8px;
+                &:nth-child(1) {
+                    width: 50px;
+                }
+                &:nth-child(2) {
+                    width: 50px;
+                }
+                &:nth-child(5) {
+                    width: 180px;
+                }
+            }
+            tbody {
+                text-align: center;
+            }
         }
     }
 }

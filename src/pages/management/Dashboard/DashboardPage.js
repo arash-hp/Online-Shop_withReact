@@ -1,11 +1,9 @@
-import { Component, useEffect } from "react";
+import { useEffect } from "react";
 import Helmet from "react-helmet";
-import { connect, useDispatch, useSelector } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { getSlides } from "../../../redux/actions/SlideAction";
 import store from "../../../redux/store";
-import { Information } from "./components/Information/Information.component";
-import { DataTable } from "./components/Information/DataTable/DataTableComponent";
-
+import {Information } from './components/index'
 export const DashboardPage = () => {
 
     
@@ -20,9 +18,7 @@ export const DashboardPage = () => {
                 Page | Dashboard
             </title>
         </Helmet>
-        {/* <Information /> */}
-        <div>DashboardPage</div>
-        <DataTable />
+        <Information />
     </>
 }
 

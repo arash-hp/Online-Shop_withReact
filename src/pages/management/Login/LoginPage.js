@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,6 +10,8 @@ import { Helmet } from 'react-helmet';
 import { ControlCameraSharp } from '@mui/icons-material';
 import { connect } from 'react-redux';
 import { login } from '../../../redux/actions/UserAction';
+import { useNavigate } from 'react-router-dom';
+import { PATHS } from '../../../configs/RoutesConfig';
 
 
 const validationSchema = yup.object({
@@ -24,19 +25,39 @@ const validationSchema = yup.object({
         .required('Password is required'),
 });
 
-const LoginComponent = () => {
 
-    const formik = useFormik({
-        initialValues: {
-            text: '',
-            password: '',
-        },
-        validationSchema: validationSchema,
-        onSubmit: async (values) => {
-            alert(JSON.stringify(values, null, 2));
+const defaultValues = {
+    name: '',
+    password: '',
+};
+
+const LoginComponent = (props) => {
+    const [formValues, setFormValues] = useState(defaultValues);
+    const navigate = useNavigate();
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({
+            ...formValues,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            console.log(formValues)
+            
+            const response = props.login(formValues).then((response) => {
+                navigate(PATHS.DASHBOARD);
+            });
+        } catch (e) {
+            console.log('LoginPage-Error')
         }
-    });
 
+    }
 
     return (
         <div>
@@ -57,18 +78,15 @@ const LoginComponent = () => {
                         sx={{ fontSize: 60, opacity: .8 }}
                     />
                 </IconButton>
-                <form onSubmit={formik.handleSubmit} >
+                <form onSubmit={handleSubmit} >
                     <TextField
                         fullWidth
-                        id="text"
-                        name="text"
+                        id="username"
+                        name="username"
                         label="نام"
-                        value={formik.values.text}
-                        onChange={formik.handleChange}
-                        error={formik.touched.text && Boolean(formik.errors.text)}
-                        helperText={formik.touched.text && formik.errors.text}
-                    // InputLabelProps={{style:{position:'absolute',right:0}}}
-
+                        type="text"
+                        value={formValues.username}
+                        onChange={handleInputChange}
                     />
                     <TextField
                         fullWidth
@@ -76,11 +94,8 @@ const LoginComponent = () => {
                         name="password"
                         label="رمز ورود"
                         type="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
-                    // InputLabelProps={{style:{position:'absolute',right:0}}}
+                        value={formValues.password}
+                        onChange={handleInputChange}
 
                     />
                     <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginTop: 40 }}>
@@ -92,11 +107,8 @@ const LoginComponent = () => {
     );
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: (data) => dispatch(login(data))
-    }
-}
-const LoginPage = connect(null, mapDispatchToProps)(LoginComponent)
+const mapDispatchToProps = dispatch => ({
+    login: (formValues) => dispatch(login(formValues))
+});
 
-export { LoginPage }
+export const SignInPage = connect(null, mapDispatchToProps)(LoginComponent);

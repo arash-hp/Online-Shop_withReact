@@ -17,7 +17,7 @@ const SignIn = props => {
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
     try {
-
+      console.log(data)
       const response = props.login(data).then((response) => {
         navigate(PATHS.DASHBOARD);
       });
