@@ -3,7 +3,8 @@ import styles from './Information.module.scss';
 import store from '../../../../../redux/store';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {Popup} from './Popup/Popup'
+import {Popup} from './Popup/Popup';
+import {ModalProduct} from './Modal/ModalComponent';
  
 
 export const Information = () => {
