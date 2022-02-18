@@ -4,10 +4,10 @@ import {
   Toolbar,
   CssBaseline,
   Typography,
-  makeStyles,
-} from "@material-ui/core";
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../../../configs/RoutesConfig";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {

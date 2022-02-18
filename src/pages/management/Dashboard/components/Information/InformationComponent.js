@@ -3,20 +3,21 @@ import styles from './Information.module.scss';
 import store from '../../../../../redux/store';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {Popup} from './Popup/Popup';
-import {ModalProduct} from './Modal/ModalComponent';
- 
+import { Popup } from './Popup/Popup';
+import { HeaderProduct } from './Header/ModalComponent';
+
 
 export const Information = () => {
 
   const data = useSelector((state) => state.slide.slides)
 
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   return <div className={styles.root}>
     <div className={styles.title}>
-      <h2>مدیریت کالاها</h2>
-      <button onClick={() => setIsOpen(true)}>ذخیزه</button>
+      {/* <h2>مدیریت کالاها</h2> */}
+      {/* <button onClick={() => setIsOpen(true)}>ذخیزه</button> */}
+      <HeaderProduct />
     </div>
     <div className={styles.information_box}>
       <table className="uk-table uk-table-striped">
@@ -34,7 +35,7 @@ export const Information = () => {
         </tbody>
       </table>
     </div>
-    {isOpen && <Popup setIsOpen={setIsOpen} />}
+    {/* {isOpen && <Popup setIsOpen={setIsOpen} />} */}
   </div>;
 }
 

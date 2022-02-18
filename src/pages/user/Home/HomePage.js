@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { getSlides } from '../../../redux/actions/SlideAction';
 import store from '../../../redux/store';
 import { Slider } from './components/Slider/SliderComponent';
+import {Content} from './components/Content/ContentComponent';
+
 class HomePage extends Component {
 
     componentDidMount() {
@@ -28,8 +30,7 @@ class HomePage extends Component {
                 title | Home
             </Helmet>
             <div>
-                HomePage
-                <Slider />
+                <Content />
             </div>
         </>
     }

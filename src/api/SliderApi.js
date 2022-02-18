@@ -9,14 +9,14 @@ export async function GetSlider() {
     }
    }
    
-//    export async function deleteSlide(id) {
-//      try {
-//        const response = await http.delete(`/slider/${id}`);
-//        return response.data;
-//      } catch (e) {
-//        return e;
-//      }
-//    }
+   export async function addProduct(data) {
+     try {
+       const response = await http.post(`/products`,data);
+       return response.data;
+     } catch (e) {
+       return e;
+     }
+   }
    
 //    export async function getSlide(id) {
 //      try {
