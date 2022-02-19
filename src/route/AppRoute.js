@@ -11,6 +11,10 @@ export const AppRoute = () => {
             <Route path={PATHS.HOME} element={<PublicRoute
                 Component={() =>
                     <Home />} />} />;
+                    
+            <Route path={PATHS.PRODUCTION} element={<PublicRoute
+                Component={() =>
+                    <ProductionUserPage />} />} />;
 
             <Route path={PATHS.CARD} element={<PublicRoute
                 Component={() =>

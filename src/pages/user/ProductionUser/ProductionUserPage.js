@@ -1,4 +1,5 @@
 import Helmet from "react-helmet";
+import { UserContent } from "./components/UserContent";
 
 export const ProductionUserPage = () => {
     return <>
@@ -7,6 +8,6 @@ export const ProductionUserPage = () => {
                 Page | ProductionUser
             </title>
         </Helmet>
-        <div>ProductionUserPage</div>
+        <div><UserContent /></div>
     </>
 }
