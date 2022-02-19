@@ -2,9 +2,8 @@ import { Button, Card, CardActions, CardContent, CardMedia, Grid, List, ListItem
 import * as React from 'react';
 
 export const CardComponent = ({ item }) => {
-  console.log('cards',item)
   return <Grid item >
-    <Card sx={{ maxWidth: 185 }}>
+    <Card sx={{ maxWidth: 185 ,m:1 }}>
       <CardMedia
         component="img"
         height="140"

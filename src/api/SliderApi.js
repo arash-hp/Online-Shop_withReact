@@ -18,12 +18,5 @@ export async function GetSlider() {
      }
    }
    
-//    export async function getSlide(id) {
-//      try {
-//        const response = await http.get(`/slider/${id}`);
-//        return response.data;
-//      } catch (e) {
-//        return e;
-//      }
-//    }
+
    

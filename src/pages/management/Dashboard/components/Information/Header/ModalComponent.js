@@ -257,9 +257,7 @@ const HeaderProduct = () => {
                         margin="normal"
                         fullWidth
                         label="نام کالا"
-                      // onChange={fieldProps.handleChange}
-                      // onBlur={fieldProps.handleBlur}
-                      // value={fieldProps.values.name}
+                     
 
                       />
                     }}</Field>
