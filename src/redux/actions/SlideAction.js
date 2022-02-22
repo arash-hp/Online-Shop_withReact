@@ -1,4 +1,4 @@
-import { addProduct, deleteProduct, GetSlider } from "../../api/SliderApi";
+import { addProduct, deleteProduct, getProduct } from "../../api/ProductApi";
 export const removeProductActionType = 'PRODUCT_REMOVE_ITEM';
 export const addProductActionType = 'PRODUCT_ADD_ITEM';
 
@@ -8,7 +8,7 @@ export const addProductAction = (data) => ({ type: addProductActionType, payload
 
 export const getSlides = () => {
     return (dispatch, getState) => {
-        return GetSlider()
+        return getProduct()
             .then(response => {
                 dispatch(setSlides(response))
                 return response

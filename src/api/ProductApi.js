@@ -1,7 +1,7 @@
 import { UPLOAD_IMG } from '../configs/UrlConfig';
 import http from '../services/http.service';
 
-export async function GetSlider() {
+export async function getProduct() {
     try {
       const response = await http.get('/products');
       return response.data;

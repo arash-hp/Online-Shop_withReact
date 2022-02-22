@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ACCESS_TOKEN, BASE_URL, IS_LOGGED_IN } from '../configs/VariablesConfig';
-import { GetSlider } from '../api/SliderApi';
+import { getProduct } from '../api/ProductApi';
 import { toast } from 'react-toastify';
 import { LOGIN, REFRESH_TOKEN, WHOAMI } from '../configs/UrlConfig';
 import history from './history.service';

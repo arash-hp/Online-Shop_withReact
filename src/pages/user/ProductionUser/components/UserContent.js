@@ -12,9 +12,10 @@ const cardStyles ={
 }
 
 export function UserContent({item}) {
+    console.log('userContent',item)
     return (
         <Grid container sx={{...cardStyles}}>
-            <Grid ml={5}><img src={'http://localhost:3003/files/234bfb4188cc0675fa26864c9b27e786'} />
+            <Grid ml={5}><img src={`http://localhost:3003/files/${item.image}`} />
             </Grid>
             <Grid item> 
                 <Typography variant="h2" mb={2} >{item.name}</Typography>

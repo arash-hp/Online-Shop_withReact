@@ -13,7 +13,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import parse from "html-react-parser";
 import { Formik, Field, Form } from 'formik';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material';
-import { addProduct, uploadImg } from '../../../../../../api/SliderApi';
+import { addProduct, uploadImg } from '../../../../../../api/ProductApi';
 import { useDispatch } from 'react-redux'
 import { createProductAction } from '../../../../../../redux/actions/SlideAction';
 import { ControlCameraSharp } from '@mui/icons-material';

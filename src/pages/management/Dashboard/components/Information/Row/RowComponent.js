@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Row.module.scss';
-import { deleteProduct } from '../../../../../../api/SliderApi';
+import { deleteProduct } from '../../../../../../api/ProductApi';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { deleteProductAction } from '../../../../../../redux/actions/SlideAction';
