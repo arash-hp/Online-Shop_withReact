@@ -12,7 +12,7 @@ const rowStyles = {
 };
 
 export const Row = ({ category }) => {
-    const data = useSelector((state) => state.slide.slides);
+    const data = useSelector((state) => state.product.products);
     const items = data.filter((item) => item.category.name === category.name);
 
     return <Grid container sx={{...rowStyles}}>

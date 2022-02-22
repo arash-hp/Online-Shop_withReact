@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { toast } from 'react-toastify';
-import { getSlides } from '../../../redux/actions/SlideAction';
+import { getProducts } from '../../../redux/actions/ProductAction';
 import store from '../../../redux/store';
 import { Slider } from './components/Slider/SliderComponent';
 import {Content} from './components/Content/ContentComponent';
@@ -13,7 +13,7 @@ class HomePage extends Component {
         // console.log('storeHomePage :', store.getState());
 
         // try {
-            this.props.getSlides()
+            this.props.getProduct()
         // } catch (e) {
         //     toast.error('Error on get slides')
         // }
@@ -22,8 +22,6 @@ class HomePage extends Component {
     }
 
     render() {
-        // console.log('props', this.props)
-        console.log('DATA',this.props.slides)
 
         return <>
             <Helmet>
@@ -45,7 +43,7 @@ class HomePage extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getSlides: () => dispatch(getSlides())
+        getProduct: () => dispatch(getProducts())
     }
 }
 const Home = connect(null, mapDispatchToProps)(HomePage)

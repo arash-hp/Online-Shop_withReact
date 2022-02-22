@@ -15,7 +15,7 @@ import { Formik, Field, Form } from 'formik';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material';
 import { addProduct, uploadImg } from '../../../../../../api/ProductApi';
 import { useDispatch } from 'react-redux'
-import { createProductAction } from '../../../../../../redux/actions/SlideAction';
+import { createProductAction } from '../../../../../../redux/actions/ProductAction';
 import { ControlCameraSharp } from '@mui/icons-material';
 
 

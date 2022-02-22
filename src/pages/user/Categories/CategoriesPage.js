@@ -16,7 +16,7 @@ export const CategoriesPage = () => {
     // }
     const param = useParams();
     const categoriesId = +param.id
-    const data = useSelector((state) => state.slide.slides);
+    const data = useSelector((state) => state.product.products);
     const result = data.filter((item) => { return item.category.id === categoriesId })
     const title = result[0].category.name;
 

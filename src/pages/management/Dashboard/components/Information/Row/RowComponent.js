@@ -3,7 +3,7 @@ import styles from './Row.module.scss';
 import { deleteProduct } from '../../../../../../api/ProductApi';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { deleteProductAction } from '../../../../../../redux/actions/SlideAction';
+import { deleteProductAction } from '../../../../../../redux/actions/ProductAction';
 
 
 export const Row = ({ item }) => {

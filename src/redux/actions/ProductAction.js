@@ -6,7 +6,7 @@ export const setSlides = (data) => ({ type: 'SLIDE_SET_SLIDES', payload: data })
 export const removeProductAction = (id) => ({ type: removeProductActionType, payload: id });
 export const addProductAction = (data) => ({ type: addProductActionType, payload: data });
 
-export const getSlides = () => {
+export const getProducts = () => {
     return (dispatch, getState) => {
         return getProduct()
             .then(response => {
@@ -18,7 +18,6 @@ export const getSlides = () => {
             })
     }
 }
-
 export const deleteProductAction = (id) => {
     return (dispatch, getState) => {
         return deleteProduct(id)

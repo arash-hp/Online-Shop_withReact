@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Helmet from "react-helmet";
 import {  useDispatch } from "react-redux";
-import { getSlides } from "../../../redux/actions/SlideAction";
+import { getProducts } from "../../../redux/actions/ProductAction";
 import store from "../../../redux/store";
 import {Information } from './components/index'
 export const DashboardPage = () => {
@@ -10,7 +10,7 @@ export const DashboardPage = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(()=>{dispatch(getSlides())},[dispatch])
+    useEffect(()=>{dispatch(getProducts())},[dispatch])
 
     return <>
         <Helmet>

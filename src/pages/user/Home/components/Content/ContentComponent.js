@@ -25,7 +25,7 @@ const getCategoriesFromProductList = (items)=>{
 
 
 export const Content = () => {
-    const data = useSelector((state) => state.slide.slides);
+    const data = useSelector((state) => state.product.products);
 
     // const getCategory = (data) => {
     //     const categories = data.map((item) => item.category?.name)

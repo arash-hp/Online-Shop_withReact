@@ -1,2 +1,2 @@
 export { ArticleReducer } from "./ArticleReducer";
-export { SlideReducer } from "./SlideReducer";
+export { ProductReducer } from "./ProductReducer";

@@ -8,7 +8,7 @@ export const ProductionUserPage = () => {
 
     const param = useParams();
     const categoriesId = +param.id
-    const data = useSelector((state) => state.slide.slides);
+    const data = useSelector((state) => state.product.products);
     const item = data.filter((item) => { return item.id === categoriesId })
    
 
