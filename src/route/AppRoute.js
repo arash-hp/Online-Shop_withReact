@@ -20,7 +20,7 @@ export const AppRoute = () => {
                 Component={() =>
                     <CardPage />} />} />;
 
-            <Route path={PATHS.CATEGORIES} element={<PublicRoute
+            <Route path={PATHS.CATEGORY} element={<PublicRoute
                 Component={() =>
                     <CategoriesPage />} />} />;
 

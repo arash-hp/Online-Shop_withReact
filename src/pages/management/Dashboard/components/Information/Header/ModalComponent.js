@@ -13,7 +13,10 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import parse from "html-react-parser";
 import { Formik, Field, Form } from 'formik';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material';
-import { addProduct } from '../../../../../../api/SliderApi';
+import { addProduct, uploadImg } from '../../../../../../api/SliderApi';
+import { useDispatch } from 'react-redux'
+import { createProductAction } from '../../../../../../redux/actions/SlideAction';
+import { ControlCameraSharp } from '@mui/icons-material';
 
 
 
@@ -21,29 +24,29 @@ const currencies = [
   {
     value:
     {
-      "id": 1001,
-      "name": "فیلم",
+      "id":1,
+      "name": "کفش",
       "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
     },
-    label: 'فیلم',
+    label: 'کفش',
   },
   {
     value:
     {
-      "id": 1002,
-      "name": "موسیقی",
-      "icon": null
+      "id": 2,
+      "name": "کوله",
+      "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
     },
-    label: 'موسیقی',
+    label: 'کوله',
   },
   {
     value:
     {
-      "id": 1003,
-      "name": "عکس",
+      "id": 3,
+      "name": "کاپشن",
       "icon": null
     },
-    label: 'عکس',
+    label: 'کاپشن',
   },
   {
     value:
@@ -108,7 +111,7 @@ const initialValues = { name: "", price: "", count: "", category: "", image: "",
 
 const HeaderProduct = () => {
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => { setOpen(true) };
   const handleClose = () => setOpen(false);
   const [open, setOpen] = React.useState(false);
   const [currency, setCurrency] = React.useState('');
@@ -130,32 +133,27 @@ const HeaderProduct = () => {
 
   const handleFileUpdate = (e) => {
     e.preventDefault();
-    let data = new FormData();
+    const data = new FormData();
     data.append('image', e.target.image.files[0])
 
-    //   try {  
-    //     uploadImg( data )
-    //       .then(res => {
-    //         imgName ? setImgName([...imgName, res.filename])
-    //         : setImgName([res.filename])
-    //       })
-    //     } catch (e) {
-    //       return Promise.reject(e)
-    //     }
+    try {
+      uploadImg(data)
+        .then(res => {
+          // imgName ? setImgName([...imgName, res.filename])
+          //   : setImgName([res.filename])
+          setImgName(res.filename)
+          console.log('image',res.filename);
+        })
+    } catch (e) {
+      return Promise.reject(e)
+    }
   }
 
   const handlethumbUpdate = (e) => {
     e.preventDefault();
-    let data = new FormData();
-    data.append('image', e.target.thumbnail.files[0])
-    //   try {  
-    //     uploadImg( data )
-    //       .then(res => {
-    //         setThumb(res.filename)
-    //       })
-    //     } catch (e) {
-    //       return Promise.reject(e)
-    //     }
+
+    // data.append('image', e.target.thumbnail.files[0])
+
   }
 
 
@@ -170,17 +168,17 @@ const HeaderProduct = () => {
     data.description = newData
     data.category = currency
     console.log(data);
-    // try {  
-    //     postData( data )
-    //     .then(res => {
-    //         console.log(res);
-    //     })
-    //   } catch (e) {
-    //     return Promise.reject(e)
-    //   }
   }
+  
+  const dispatch = useDispatch();
   const onSubmit = React.useCallback((values) => {
-    addProduct(values);
+    console.log('values',values);
+    const data = values;
+    data.image = imgName;
+    data.category = currency ;
+    console.log('modal',data);
+    dispatch(createProductAction(data))
+    // addProduct(values);
   })
 
   return (
@@ -197,8 +195,27 @@ const HeaderProduct = () => {
         onClose={handleClose}
       >
         <DialogTitle>
-          <Typography variant="h6" >افزودن کالا  </Typography>
+          افزودن کالا
         </DialogTitle>
+        <form component="form" onSubmit={handleFileUpdate} noValidate sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <TextField
+            margin="normal"
+            required
+            id="image"
+            label="تصویر اصلی کالا"
+            name="image"
+            type="file"
+            autoComplete="name"
+            autoFocus
+            focused
+            sx={{
+              mb: 2,
+            }}
+          />
+          <Button type="submit" variant="contained" sx={{ m: 2, mr: 0, height: '54px', width: '30%', boxShadow: 0 }}>
+            <Typography variant="h8" sx={{ color: "white" }}>بارگذاری </Typography>
+          </Button>
+        </form>
         <Formik
           initialValues={initialValues}
 
@@ -209,7 +226,7 @@ const HeaderProduct = () => {
 
               <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
                 <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
-                  <Grid item sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  {/* <Grid item sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Field name='image'>
                       {(fieldProps) => {
                         return <TextField
@@ -228,8 +245,8 @@ const HeaderProduct = () => {
                         آپلود
                       </Button>
                     </DialogActions>
-                  </Grid>
-                  <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  </Grid> */}
+                  {/* <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Field name='thumbnail'>
                       {(fieldProps) => {
                         return <TextField
@@ -248,16 +265,29 @@ const HeaderProduct = () => {
                         آپلود
                       </Button>
                     </DialogActions>
-                  </Grid>
+                  </Grid> */}
                   <Grid item sx={{ width: '500px' }}>
                     <Field name='name'>{(fieldProps) => {
-                      console.log('modal', fieldProps)
+                      // console.log('modal', fieldProps)
                       return <TextField
                         {...fieldProps.field}
                         margin="normal"
                         fullWidth
                         label="نام کالا"
-                     
+
+
+                      />
+                    }}</Field>
+                  </Grid>
+                  <Grid item sx={{ width: '500px' }}>
+                    <Field name='brand'>{(fieldProps) => {
+                      // console.log('modal', fieldProps)
+                      return <TextField
+                        {...fieldProps.field}
+                        margin="normal"
+                        fullWidth
+                        label="نام برند"
+
 
                       />
                     }}</Field>

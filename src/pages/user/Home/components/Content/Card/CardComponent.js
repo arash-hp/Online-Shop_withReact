@@ -3,21 +3,28 @@ import * as React from 'react';
 
 export const CardComponent = ({ item }) => {
   return <Grid item >
-    <Card sx={{ maxWidth: 185 ,m:1 }}>
+    <Card sx={{ width: 195, height: 240, m: 1 }}>
       <CardMedia
         component="img"
+        sx={{
+          Height: 'auto', width: '100%'
+        }}
         height="140"
-        image="http://localhost:3003/files/234bfb4188cc0675fa26864c9b27e786"
+        // max-width='120'
+        // flex={1}
+        // objectFit='cover'
+        image={`http://localhost:3003/files/${item.image}`}
         alt="green iguana"
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {item.category.name}
+      <CardContent
+        sx={{ maxHeight: 20 }}
+      >
+        <Typography gutterBottom variant="p" component="div">
+          {item.name}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">افزودن به سبد خرید</Button>
       </CardActions>
     </Card>
   </Grid>

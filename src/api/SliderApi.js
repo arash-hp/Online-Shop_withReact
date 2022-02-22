@@ -1,3 +1,4 @@
+import { UPLOAD_IMG } from '../configs/UrlConfig';
 import http from '../services/http.service';
 
 export async function GetSlider() {
@@ -17,6 +18,27 @@ export async function GetSlider() {
        return e;
      }
    }
+   
+   export async function deleteProduct(id) {
+     try {
+       console.log('api',id);
+       const response = await http.delete(`/products/${id}`);
+       return response.data;
+     } catch (e) {
+       return e;
+     }
+   }
+
+
+   export async function uploadImg(data) {
+    try {
+        const response = await http.post(`/upload`, data)
+        console.log(response.data)
+        return  response.data
+    }catch(e){
+        return e
+    }
+}
    
 
    

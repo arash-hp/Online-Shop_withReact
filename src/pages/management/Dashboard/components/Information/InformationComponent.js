@@ -3,13 +3,14 @@ import styles from './Information.module.scss';
 import store from '../../../../../redux/store';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Popup } from './Popup/Popup';
 import { HeaderProduct } from './Header/ModalComponent';
 
 
 export const Information = () => {
 
   const data = useSelector((state) => state.slide.slides)
+
+  
 
   // const [isOpen, setIsOpen] = useState(false);
 
