@@ -29,6 +29,7 @@ export const Row = ({ item }) => {
     }
 
     const onSubmit = React.useCallback((values) => {
+        console.log('row',values)
         dispatch(updateProductAction(values))
         handleClose();
       }, [dispatch, handleClose])
