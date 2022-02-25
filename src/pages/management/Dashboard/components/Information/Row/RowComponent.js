@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styles from './Row.module.scss';
 import { deleteProduct } from '../../../../../../api/ProductApi';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { deleteProductAction } from '../../../../../../redux/actions/ProductAction';
+import { createProductAction, deleteProductAction, updateProductAction } from '../../../../../../redux/actions/ProductAction';
 import { Button, Dialog, DialogActions, DialogTitle, Grid, MenuItem, TextField, Typography } from '@mui/material';
 import { Field, Formik } from 'formik';
 import { ClassicEditor } from '@ckeditor/ckeditor5-build-classic';
@@ -14,6 +14,9 @@ import { ModalComponent } from '../../../../../../components';
 
 export const Row = ({ item }) => {
 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => { setOpen(true) };
+    const handleClose = useCallback(() => setOpen(false),[setOpen]);
     const dispatch = useDispatch();
 
     const deleteItem = () => {
@@ -25,9 +28,11 @@ export const Row = ({ item }) => {
 
     }
 
+    const onSubmit = React.useCallback((values) => {
+        dispatch(updateProductAction(values))
+        handleClose();
+      }, [dispatch, handleClose])
 
-
-    // const [modalShown, toggleModal] = React.useState(false);
 
 
     return <> <tr className={styles.root}>
@@ -35,8 +40,8 @@ export const Row = ({ item }) => {
         <td><img src={`http://localhost:3003/files/${item.image}`} /></td>
         <td>{item.name}</td>
         <td>{item.brand}</td>
-        <td><button onClick={deleteItem}>حذف</button><button >
-            <ModalComponent />
+        <td><button onClick={deleteItem}>حذف</button><button onClick={handleOpen} >ویرایش
+            <ModalComponent open={open} onClose={handleClose} onSubmit={onSubmit} item={item} />
         </button></td>
     </tr>
     </>

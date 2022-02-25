@@ -132,34 +132,33 @@ const HeaderProduct = ({ open, onClose, onSubmit }) => {
   };
 
 
-  const handleFileUpdate = (e) => {
-    e.preventDefault();
+  // const handleFileUpdate = (e) => {
+  //   e.preventDefault();
 
-    const data = new FormData();
-    data.append('image', e.target.files[0])
+  //   const data = new FormData();
+  //   data.append('image', e.target.files[0])
 
-    try {
-      uploadImg(data)
-        .then(res => {
-          // imgName ? setImgName([...imgName, res.filename])
-          //   : setImgName([res.filename])
-          setImgName(res.filename)
-          console.log('image', res.filename);
-        })
-    } catch (e) {
-      return Promise.reject(e)
-    }
-  }
+  //   try {
+  //     uploadImg(data)
+  //       .then(res => {
+  //         // imgName ? setImgName([...imgName, res.filename])
+  //         //   : setImgName([res.filename])
+  //         setImgName(res.filename)
+  //         console.log('image', res.filename);
+  //       })
+  //   } catch (e) {
+  //     return Promise.reject(e)
+  //   }
+  // }
 
   const handlethumbUpdate = (e) => {
     e.preventDefault();
-
     // data.append('image', e.target.thumbnail.files[0])
-
   }
 
 
   const handleSubmit = (values) => {
+    console.log('values',values)
     onSubmit({...values,category:currency,description})
   }
 
@@ -177,7 +176,6 @@ const HeaderProduct = ({ open, onClose, onSubmit }) => {
   // })
 
   return (
-
     <Dialog
       open={open}
       onClose={onClose}

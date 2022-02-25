@@ -1,12 +1,9 @@
 import { ClassicEditor } from "@ckeditor/ckeditor5-build-classic";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { uploadImg } from "../../api/ProductApi";
-import { createProductAction } from "../../redux/actions/ProductAction";
-import styles from './ModalComponent.module.scss';
+import { FileUploader } from "../FileUploade";
 
 const currencies = [
     {
@@ -98,45 +95,11 @@ const currencies = [
 const initialValues = { name: "", price: "", count: "", category: "", image: "", thumbnail: "", description: "" }
 
 
-export const ModalComponent = ({show,close}) => {
-
-    const handleOpen = () => { setOpen(true) };
-    const handleClose = () => setOpen(false);
-    const [open, setOpen] = React.useState(false);
+export const ModalComponent = ({ open, onClose, onSubmit ,item}) => {
     const [currency, setCurrency] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [imgName, setImgName] = React.useState('');
-    const [thumb, setThumb] = React.useState('');
 
 
-
-    //================= Update image 
-    const handleFileUpdate = (e) => {
-        e.preventDefault();
-        const data = new FormData();
-        data.append('image', e.target.image.files[0])
-
-        try {
-            uploadImg(data)
-                .then(res => {
-                    // imgName ? setImgName([...imgName, res.filename])
-                    //   : setImgName([res.filename])
-                    setImgName(res.filename)
-                    console.log('image', res.filename);
-                })
-        } catch (e) {
-            return Promise.reject(e)
-        }
-    }
-    //================= receive & send ======================
-    const dispatch = useDispatch();
-    const onSubmit = React.useCallback((values) => {
-        const data = values;
-        data.image = imgName;
-        data.category = currency;
-        dispatch(createProductAction(data));
-        // addProduct(values);
-    })
 
     //==================  Choose category =======================
     const handleChange = (event) => {
@@ -149,145 +112,136 @@ export const ModalComponent = ({show,close}) => {
         setDescription(describeData)
     }
 
+    //====================
+    const handleSubmit = (values) => {
+        onSubmit({ ...values, category: currency, description })
+    }
+
+
     return (
-        <div className={styles.root}
-
-
+        <Dialog
+            open={open}
+            onClose={onClose}
         >
-            <Dialog
-                open={show}
-                onClose={close}
-            >
-                <DialogTitle>
-                    افزودن کالا
-                </DialogTitle>
-                <form component="form" onSubmit={handleFileUpdate} noValidate sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        id="image"
-                        label="تصویر اصلی کالا"
-                        name="image"
-                        type="file"
-                        autoComplete="name"
-                        autoFocus
-                        focused
-                        sx={{
-                            mb: 2,
-                        }}
-                    />
-                    <Button type="submit" variant="contained" sx={{ m: 2, mr: 0, height: '54px', width: '30%', boxShadow: 0 }}>
-                        <Typography variant="h8" sx={{ color: "white" }}>بارگذاری </Typography>
-                    </Button>
-                </form>
-                <Formik
-                    initialValues={initialValues}
+            <DialogTitle>
+                افزودن کالا
+            </DialogTitle>
+            <Formik
+                initialValues={item}
 
-                    onSubmit={onSubmit}>
+                onSubmit={handleSubmit}>
 
-                    <Form sx={{ marginLeft: '30px' }}>
-                        <DialogContent >
+                <Form sx={{ marginLeft: '30px' }}>
+                    <DialogContent >
 
-                            <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
-                                <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
-                                    <Grid item sx={{ width: '500px' }}>
-                                        <Field name='name'>{(fieldProps) => {
-                                            // console.log('modal', fieldProps)
-                                            return <TextField
-                                                {...fieldProps.field}
-                                                margin="normal"
-                                                fullWidth
-                                                label="نام کالا"
-
-
-                                            />
-                                        }}</Field>
-                                    </Grid>
-                                    <Grid item sx={{ width: '500px' }}>
-                                        <Field name='brand'>{(fieldProps) => {
-                                            // console.log('modal', fieldProps)
-                                            return <TextField
-                                                {...fieldProps.field}
-                                                margin="normal"
-                                                fullWidth
-                                                label="نام برند"
-
-
-                                            />
-                                        }}</Field>
-                                    </Grid>
-                                    <Grid item sx={{ width: '250px' }}><Field name='price' >
-                                        {(fieldProps) => {
-                                            return <TextField
-                                                {...fieldProps.field}
-                                                margin="normal"
-                                                fullWidth
-                                                name="price"
-                                                label="قیمت"
-                                                type='number'
-                                            />
-                                        }}</Field></Grid>
-                                    <Grid item sx={{ width: '250px' }}><Field name='count' >{(fieldProps) => {
+                        <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
+                            <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
+                                <Grid item sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <FileUploader
+                                        margin="normal"
+                                        label="تصویر اصلی کالا"
+                                        name="image"
+                                        sx={{
+                                            mb: 2,
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item sx={{ width: '500px' }}>
+                                    <Field name='name'>{(fieldProps) => {
+                                        // console.log('modal', fieldProps)
                                         return <TextField
                                             {...fieldProps.field}
                                             margin="normal"
                                             fullWidth
-                                            name="count"
-                                            label="تعداد"
+                                            label="نام کالا"
+
+
+                                        />
+                                    }}</Field>
+                                </Grid>
+                                <Grid item sx={{ width: '500px' }}>
+                                    <Field name='brand'>{(fieldProps) => {
+                                        // console.log('modal', fieldProps)
+                                        return <TextField
+                                            {...fieldProps.field}
+                                            margin="normal"
+                                            fullWidth
+                                            label="نام برند"
+
+
+                                        />
+                                    }}</Field>
+                                </Grid>
+                                <Grid item sx={{ width: '250px' }}><Field name='price' >
+                                    {(fieldProps) => {
+                                        return <TextField
+                                            {...fieldProps.field}
+                                            margin="normal"
+                                            fullWidth
+                                            name="price"
+                                            label="قیمت"
                                             type='number'
                                         />
                                     }}</Field></Grid>
-                                    <Grid item ><Field name='category'>
+                                <Grid item sx={{ width: '250px' }}><Field name='count' >{(fieldProps) => {
+                                    return <TextField
+                                        {...fieldProps.field}
+                                        margin="normal"
+                                        fullWidth
+                                        name="count"
+                                        label="تعداد"
+                                        type='number'
+                                    />
+                                }}</Field></Grid>
+                                <Grid item ><Field name='category'>
+                                    {(fieldProps) => {
+                                        return <TextField
+                                            {...fieldProps.field}
+                                            id="outlined-select-currency"
+                                            select
+                                            name="category"
+                                            label=" دسته بندی را انتخاب کنید ..."
+                                            value={currency.value}
+                                            onChange={handleChange}
+                                            // helperText="لطفا دسته بندی را انتخاب کنید"
+                                            sx={{ width: '235px' }}
+                                        >
+                                            {currencies.map((option) => (
+                                                <MenuItem key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    }}
+                                </Field>
+                                </Grid>
+                                <Grid item sx={{ width: '250px' }} >
+                                    <Field name='description'>
                                         {(fieldProps) => {
-                                            return <TextField
+                                            return <CKEditor
                                                 {...fieldProps.field}
-                                                id="outlined-select-currency"
-                                                select
-                                                name="category"
-                                                label=" دسته بندی را انتخاب کنید ..."
-                                                value={currency.value}
-                                                onChange={handleChange}
-                                                // helperText="لطفا دسته بندی را انتخاب کنید"
-                                                sx={{ width: '235px' }}
-                                            >
-                                                {currencies.map((option) => (
-                                                    <MenuItem key={option.value} value={option.value}>
-                                                        {option.label}
-                                                    </MenuItem>
-                                                ))}
-                                            </TextField>
+                                                editor={ClassicEditor}
+                                                name="description"
+                                                config={{ language: 'fa' }}
+                                                onChange={describeChange}
+                                            />
                                         }}
                                     </Field>
-                                    </Grid>
-                                    <Grid item sx={{ width: '250px' }} >
-                                        <Field name='description'>
-                                            {(fieldProps) => {
-                                                return <CKEditor
-                                                    {...fieldProps.field}
-                                                    editor={ClassicEditor}
-                                                    name="description"
-                                                    config={{ language: 'fa' }}
-                                                    onChange={describeChange}
-                                                />
-                                            }}
-                                        </Field>
-                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </DialogContent>
-                        <DialogActions >
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                onClick={close}
-                            >
-                                <Typography variant="h6" sx={{ color: "white" }}>ذخیره</Typography>
-                            </Button>
-                        </DialogActions>
-                    </Form>
-                </Formik>
-            </Dialog>
-        </div >
+                        </Grid>
+                    </DialogContent>
+                    <DialogActions >
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                        >
+                            <Typography variant="h6" sx={{ color: "white" }}>ذخیره</Typography>
+                        </Button>
+                    </DialogActions>
+                </Form>
+            </Formik>
+        </Dialog>
     );
 }

@@ -21,7 +21,6 @@ export async function getProduct() {
    
    export async function deleteProduct(id) {
      try {
-       console.log('api',id);
        const response = await http.delete(`/products/${id}`);
        return response.data;
      } catch (e) {
@@ -33,22 +32,21 @@ export async function getProduct() {
    export async function uploadImg(data) {
     try {
         const response = await http.post(`/upload`, data)
-        console.log(response.data)
         return  response.data
     }catch(e){
         return e
     }
 }
    
-// export async function editProduct(id,data) {
-//   try {
-//     console.log('api',id);
-//     const response = await http.delete(`/products/${id}`,data);
-//     return response.data;
-//   } catch (e) {
-//     return e;
-//   }
-// }
+export async function editProduct(data) {
+  try {
+    console.log('api',data);
+    const response = await http.put(`/products/${data.id}`,data);
+    return response.data;
+  } catch (e) {
+    return e;
+  }
+}
 
 
    

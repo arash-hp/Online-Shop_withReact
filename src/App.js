@@ -13,7 +13,7 @@ import { whoami } from './redux/actions/UserAction';
 import store from './redux/store';
 import { AppRoute } from './route/AppRoute';
 import history from './services/history.service';
-
+import rtlPlugin from 'stylis-plugin-rtl';
 
 
 
@@ -36,23 +36,23 @@ function App() {
     {/* <CssBaseline /> */}
     <Provider store={store}>
       <StylesProvider jss={jss} >
-        <ThemeProvider theme={CustomTheme}>
-          <BrowserRouter history={history}>
-            <CssBaseline />
-            <AppRoute />
-            <ToastContainer
-              position='bottom-left'
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-            />
-          </BrowserRouter>
-        </ThemeProvider>
+          <ThemeProvider theme={CustomTheme}>
+            <BrowserRouter history={history}>
+              <CssBaseline />
+              <AppRoute />
+              <ToastContainer
+                position='bottom-left'
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+            </BrowserRouter>
+          </ThemeProvider>
       </StylesProvider>
     </Provider>
 

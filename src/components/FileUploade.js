@@ -5,7 +5,6 @@ import { uploadImg } from '../api/ProductApi';
 export const FileUploader = ({ name, ...rest }) => {
     const [,,{setValue}] = useField(name)
 
-
     const onChange = (e) => {
         e.preventDefault();
 
@@ -22,7 +21,5 @@ export const FileUploader = ({ name, ...rest }) => {
         {...rest}
         onChange={onChange}
         type="file"
-
-
     />
 }

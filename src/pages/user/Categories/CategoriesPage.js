@@ -7,7 +7,7 @@ import { CardComponent } from "../Home/components/Content/Card/CardComponent";
 import { Row } from "../Home/components/Content/Row/RowComponent";
 
 export const CategoriesPage = () => {
- 
+
     const param = useParams();
     const categoriesId = +param.id
     const data = useSelector((state) => state.product.products);
