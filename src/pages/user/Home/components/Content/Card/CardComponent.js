@@ -1,25 +1,30 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, List, ListItem, Typography } from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, List, ListItem, Typography } from '@mui/material';
+import {  makeStyles } from '@mui/styles';
 import * as React from 'react';
 
+
 export const CardComponent = ({ item }) => {
-  return <Grid item >
-    <Card sx={{ width: 195, height: 240, m: 1 }}>
-      <CardMedia
-        component="img"
-        sx={{
-          Height: 'auto', width: '100%'
-        }}
-        height="140"
-        // max-width='120'
-        // flex={1}
-        // objectFit='cover'
-        image={`http://localhost:3003/files/${item.image}`}
-        alt="green iguana"
-      />
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      backgroundImage: `url(http://localhost:3003/files/${item.image})`,
+      height: 140,
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      color: 'white',
+    },
+  }));
+
+  const classes = useStyles();
+
+  return <Grid item   m={1}>
+    <Card sx={{ width: 195, height: 240 ,}}>
+      <Box sx={{ height: "140px",mt:2,ml:1,mr:1 }} className={classes.root}></Box>
       <CardContent
         sx={{ maxHeight: 20 }}
       >
-        <Typography gutterBottom variant="p" component="div">
+        <Typography gutterBottom variant="caption" component="div">
           {item.name}
         </Typography>
       </CardContent>

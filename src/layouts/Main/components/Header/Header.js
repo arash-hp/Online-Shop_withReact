@@ -15,6 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { Link } from 'react-router-dom';
+import { PATHS } from '../../../../configs/RoutesConfig';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -35,7 +37,7 @@ const Search = styled('div')(({ theme }) => ({
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
-  left:'0',
+  left: '0',
   position: 'absolute',
   pointerEvents: 'none',
   display: 'flex',
@@ -59,6 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElement, setAnchorElelement] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -76,7 +79,16 @@ export function Header() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  //==========================
+  const openMenu = Boolean(anchorElement)
 
+  const handleLinkClick = (e) => {
+    setAnchorElelement(e.currentTarget)
+  }
+
+  const handleLinkClose = () => {
+    setAnchorElelement(null)
+  }
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -98,7 +110,9 @@ export function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>پروفایل من</MenuItem>
+      <Link to={PATHS.LOGIN} color='inherit'>
+        <MenuItem onClick={handleMenuClose} textDecoration='none' sx={{textDecoration:'none'}}>پروفایل من</MenuItem>
+      </Link>
       <MenuItem onClick={handleMenuClose}>پنل مدیریت</MenuItem>
     </Menu>
   );
@@ -134,7 +148,7 @@ export function Header() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -173,8 +187,9 @@ export function Header() {
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
+            mr={2}
           >
-            MUI
+            Camping
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -185,6 +200,24 @@ export function Header() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Box sx={{ display: 'flex', marginRight: '14%' }}>
+            <Typography sx={{ marginRight: '20px', cursor: 'pointer' }} variant='body2' >کوهنوردی</Typography>
+            <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}>کمپینگ</Typography>
+            <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}
+              aria-controls='basic-menu'
+              aria-haspopup="true"
+              aria-expanded={openMenu ? "true" : undefined}
+              onClick={handleLinkClick}
+            >لباس</Typography>
+
+            <Menu id='basic-menu'
+              anchorEl={anchorElement}
+              open={openMenu}
+              onClose={handleLinkClose}>
+              <MenuItem onClick={handleLinkClose}>مردانه</MenuItem>
+              <MenuItem onClick={handleLinkClose}>زنانه</MenuItem>
+            </Menu>
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">

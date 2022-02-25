@@ -40,5 +40,15 @@ export async function getProduct() {
     }
 }
    
+// export async function editProduct(id,data) {
+//   try {
+//     console.log('api',id);
+//     const response = await http.delete(`/products/${id}`,data);
+//     return response.data;
+//   } catch (e) {
+//     return e;
+//   }
+// }
+
 
    

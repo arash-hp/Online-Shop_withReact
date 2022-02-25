@@ -1,1 +1,2 @@
-export { NavigationComponent } from "./Navigation/NavigationComponent";
+// export { NavigationComponent } from "./Navigation/NavigationComponent";
+export {ModalComponent} from './Modal/ModalComponent';

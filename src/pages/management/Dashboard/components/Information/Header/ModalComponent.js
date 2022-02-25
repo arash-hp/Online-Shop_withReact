@@ -17,6 +17,8 @@ import { addProduct, uploadImg } from '../../../../../../api/ProductApi';
 import { useDispatch } from 'react-redux'
 import { createProductAction } from '../../../../../../redux/actions/ProductAction';
 import { ControlCameraSharp } from '@mui/icons-material';
+import { ModalComponent } from '../../../../../../components/index';
+import { FileUploader } from '../../../../../../components/FileUploade';
 
 
 
@@ -24,7 +26,7 @@ const currencies = [
   {
     value:
     {
-      "id":1,
+      "id": 1,
       "name": "کفش",
       "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
     },
@@ -109,11 +111,11 @@ const currencies = [
 
 const initialValues = { name: "", price: "", count: "", category: "", image: "", thumbnail: "", description: "" }
 
-const HeaderProduct = () => {
+const HeaderProduct = ({ open, onClose, onSubmit }) => {
 
-  const handleOpen = () => { setOpen(true) };
-  const handleClose = () => setOpen(false);
-  const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => { setOpen(true) };
+  // const handleClose = () => setOpen(false);
+  // const [open, setOpen] = React.useState(false);
   const [currency, setCurrency] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [imgName, setImgName] = React.useState('');
@@ -130,11 +132,11 @@ const HeaderProduct = () => {
   };
 
 
-
   const handleFileUpdate = (e) => {
     e.preventDefault();
+
     const data = new FormData();
-    data.append('image', e.target.image.files[0])
+    data.append('image', e.target.files[0])
 
     try {
       uploadImg(data)
@@ -142,7 +144,7 @@ const HeaderProduct = () => {
           // imgName ? setImgName([...imgName, res.filename])
           //   : setImgName([res.filename])
           setImgName(res.filename)
-          console.log('image',res.filename);
+          console.log('image', res.filename);
         })
     } catch (e) {
       return Promise.reject(e)
@@ -157,96 +159,58 @@ const HeaderProduct = () => {
   }
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleClose()
-    const form = new FormData(e.target);
-    const data = Object.fromEntries(form);
-    const newData = description && parse(description).props.children;
-    data.image = imgName
-    data.thumbnail = thumb
-    data.description = newData
-    data.category = currency
-    console.log(data);
+  const handleSubmit = (values) => {
+    onSubmit({...values,category:currency,description})
   }
-  
+
+
+
   const dispatch = useDispatch();
-  const onSubmit = React.useCallback((values) => {
-    console.log('values',values);
-    const data = values;
-    data.image = imgName;
-    data.category = currency ;
-    console.log('modal',data);
-    dispatch(createProductAction(data))
-    // addProduct(values);
-  })
+  // const onSubmit = React.useCallback((values) => {
+  //   console.log('values', values);
+  //   const data = values;
+  //   data.image = imgName;
+  //   data.category = currency;
+  //   console.log('modal', data);
+  //   dispatch(createProductAction(data))
+  //   // addProduct(values);
+  // })
 
   return (
 
-    <div className={styles.root}>
-      <div className={styles.title}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+    >
+      <DialogTitle>
+        افزودن کالا
+      </DialogTitle>
+      {/* <form component="form"  noValidate sx={{ display: 'flex', justifyContent: 'space-between' }}> */}
 
-        <h2>مدیریت کالاها</h2>
-        <Button onClick={handleOpen}>افزودن کالا</Button>
-      </div>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>
-          افزودن کالا
-        </DialogTitle>
-        <form component="form" onSubmit={handleFileUpdate} noValidate sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <TextField
-            margin="normal"
-            required
-            id="image"
-            label="تصویر اصلی کالا"
-            name="image"
-            type="file"
-            autoComplete="name"
-            autoFocus
-            focused
-            sx={{
-              mb: 2,
-            }}
-          />
-          <Button type="submit" variant="contained" sx={{ m: 2, mr: 0, height: '54px', width: '30%', boxShadow: 0 }}>
-            <Typography variant="h8" sx={{ color: "white" }}>بارگذاری </Typography>
-          </Button>
-        </form>
-        <Formik
-          initialValues={initialValues}
+      {/* </form> */}
+      <Formik
+        initialValues={initialValues}
 
-          onSubmit={onSubmit}>
+        onSubmit={handleSubmit}>
 
-          <Form sx={{ marginLeft: '30px' }}>
-            <DialogContent >
+        <Form sx={{ marginLeft: '30px' }}>
+          <DialogContent >
 
-              <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
-                <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
-                  {/* <Grid item sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Field name='image'>
-                      {(fieldProps) => {
-                        return <TextField
-                          {...fieldProps.field}
-                          margin="normal"
-                          id="image"
-                          label="تصویر کالا"
-                          name="image"
-                          type="file"
-                          value={fieldProps.image}
-                        />
-                      }}
-                    </Field>
-                    <DialogActions>
-                      <Button type="submit" variant="contained" >
-                        آپلود
-                      </Button>
-                    </DialogActions>
-                  </Grid> */}
-                  {/* <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
+              <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
+                <Grid item sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <FileUploader
+                    // inputRef={fileRef}
+                    margin="normal"
+                    label="تصویر اصلی کالا"
+                    name="image"
+                    sx={{
+                      mb: 2,
+                    }}
+                  />
+                </Grid>
+                {/* <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Field name='thumbnail'>
                       {(fieldProps) => {
                         return <TextField
@@ -266,104 +230,103 @@ const HeaderProduct = () => {
                       </Button>
                     </DialogActions>
                   </Grid> */}
-                  <Grid item sx={{ width: '500px' }}>
-                    <Field name='name'>{(fieldProps) => {
-                      // console.log('modal', fieldProps)
-                      return <TextField
-                        {...fieldProps.field}
-                        margin="normal"
-                        fullWidth
-                        label="نام کالا"
-
-
-                      />
-                    }}</Field>
-                  </Grid>
-                  <Grid item sx={{ width: '500px' }}>
-                    <Field name='brand'>{(fieldProps) => {
-                      // console.log('modal', fieldProps)
-                      return <TextField
-                        {...fieldProps.field}
-                        margin="normal"
-                        fullWidth
-                        label="نام برند"
-
-
-                      />
-                    }}</Field>
-                  </Grid>
-                  <Grid item sx={{ width: '250px' }}><Field name='price' >
-                    {(fieldProps) => {
-                      return <TextField
-                        {...fieldProps.field}
-                        margin="normal"
-                        fullWidth
-                        name="price"
-                        label="قیمت"
-                        type='number'
-                      />
-                    }}</Field></Grid>
-                  <Grid item sx={{ width: '250px' }}><Field name='count' >{(fieldProps) => {
+                <Grid item sx={{ width: '500px' }}>
+                  <Field name='name'>{(fieldProps) => {
+                    // console.log('modal', fieldProps)
                     return <TextField
                       {...fieldProps.field}
                       margin="normal"
                       fullWidth
-                      name="count"
-                      label="تعداد"
+                      label="نام کالا"
+
+
+                    />
+                  }}</Field>
+                </Grid>
+                <Grid item sx={{ width: '500px' }}>
+                  <Field name='brand'>{(fieldProps) => {
+                    // console.log('modal', fieldProps)
+                    return <TextField
+                      {...fieldProps.field}
+                      margin="normal"
+                      fullWidth
+                      label="نام برند"
+
+
+                    />
+                  }}</Field>
+                </Grid>
+                <Grid item sx={{ width: '250px' }}><Field name='price' >
+                  {(fieldProps) => {
+                    return <TextField
+                      {...fieldProps.field}
+                      margin="normal"
+                      fullWidth
+                      name="price"
+                      label="قیمت"
                       type='number'
                     />
                   }}</Field></Grid>
-                  <Grid item ><Field name='category'>
+                <Grid item sx={{ width: '250px' }}><Field name='count' >{(fieldProps) => {
+                  return <TextField
+                    {...fieldProps.field}
+                    margin="normal"
+                    fullWidth
+                    name="count"
+                    label="تعداد"
+                    type='number'
+                  />
+                }}</Field></Grid>
+                <Grid item ><Field name='category'>
+                  {(fieldProps) => {
+                    return <TextField
+                      {...fieldProps.field}
+                      id="outlined-select-currency"
+                      select
+                      name="category"
+                      label=" دسته بندی را انتخاب کنید ..."
+                      value={currency.value}
+                      onChange={handleChange}
+                      // helperText="لطفا دسته بندی را انتخاب کنید"
+                      sx={{ width: '235px' }}
+                    >
+                      {currencies.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  }}
+                </Field>
+                </Grid>
+                <Grid item sx={{ width: '250px' }} >
+                  <Field name='description'>
                     {(fieldProps) => {
-                      return <TextField
+                      return <CKEditor
                         {...fieldProps.field}
-                        id="outlined-select-currency"
-                        select
-                        name="category"
-                        label=" دسته بندی را انتخاب کنید ..."
-                        value={currency.value}
-                        onChange={handleChange}
-                        // helperText="لطفا دسته بندی را انتخاب کنید"
-                        sx={{ width: '235px' }}
-                      >
-                        {currencies.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                        editor={ClassicEditor}
+                        name="description"
+                        config={{ language: 'fa' }}
+                        onChange={describeChange}
+                      />
                     }}
                   </Field>
-                  </Grid>
-                  <Grid item sx={{ width: '250px' }} >
-                    <Field name='description'>
-                      {(fieldProps) => {
-                        return <CKEditor
-                          {...fieldProps.field}
-                          editor={ClassicEditor}
-                          name="description"
-                          config={{ language: 'fa' }}
-                          onChange={describeChange}
-                        />
-                      }}
-                    </Field>
-                  </Grid>
                 </Grid>
               </Grid>
-            </DialogContent>
-            <DialogActions >
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-              >
-                <Typography variant="h6" sx={{ color: "white" }}>ذخیره</Typography>
-              </Button>
-            </DialogActions>
-          </Form>
-        </Formik>
-      </Dialog>
-    </div >
+            </Grid>
+          </DialogContent>
+          <DialogActions >
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+            >
+              <Typography variant="h6" sx={{ color: "white" }}>ذخیره</Typography>
+            </Button>
+          </DialogActions>
+        </Form>
+      </Formik>
+    </Dialog>
   );
 }
 

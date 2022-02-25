@@ -1,4 +1,4 @@
-import { addProductActionType, removeProductActionType } from "../actions/ProductAction";
+import { addProductActionType, removeProductActionType, editProductActionType } from "../actions/ProductAction";
 
 const initialState = {
     products: []
@@ -11,7 +11,9 @@ export const ProductReducer = (state = initialState, action) => {
         case removeProductActionType:
             return { ...state, products: state.products.filter((item) => { return item.id !== action.payload }) };
         case addProductActionType:
-            return { ...state, products: [action.payload, ...state.products]}
+            return { ...state, products: [action.payload, ...state.products] };
+        // case editProductActionType:
+        //     return { ...state, products: [action.payload, ...state.products] };
         default:
             return state
     }

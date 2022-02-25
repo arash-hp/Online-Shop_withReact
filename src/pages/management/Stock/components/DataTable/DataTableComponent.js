@@ -26,7 +26,7 @@ const columns = [
 ];
 
 export function DataTable() {
-    const data = useSelector((state) => state.slide.slides)
+    const data = useSelector((state) => state.product.products)
     console.log('data',data)
 
     return (
