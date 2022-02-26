@@ -22,18 +22,12 @@ export const Information = () => {
     handleClose();
   }, [dispatch, handleClose])
 
-  // const [isOpen, setIsOpen] = useState(false);
 
   return <div className={styles.root}>
-    {/* <div className={styles.title}> */}
-    {/* <h2>مدیریت کالاها</h2> */}
-    {/* <button onClick={() => setIsOpen(true)}>ذخیزه</button> */}
-    {/* <HeaderProduct /> */}
     <Toolbar sx={{ justifyContent: 'space-between' }}>
       <Typography>مدیریت کالاها</Typography>
       <Button onClick={handleOpen}>افزودن کالا</Button>
     </Toolbar>
-    {/* </div> */}
     <div className={styles.information_box}>
       <table className="uk-table uk-table-striped">
         <thead>
@@ -50,7 +44,6 @@ export const Information = () => {
         </tbody>
       </table>
     </div>
-    {/* {isOpen && <Popup setIsOpen={setIsOpen} />} */}
     <HeaderProduct open={open} onClose={handleClose} onSubmit={onSubmit} />
   </div>;
 }
