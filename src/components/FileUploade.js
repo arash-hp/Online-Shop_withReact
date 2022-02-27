@@ -11,6 +11,7 @@ export const FileUploader = ({ name, ...rest }) => {
         const data = new FormData();
         data.append('image', e.target.files[0])
 
+        console.log(data)
         uploadImg(data)
             .then(res => {
                 setValue(res.filename)
@@ -21,5 +22,14 @@ export const FileUploader = ({ name, ...rest }) => {
         {...rest}
         onChange={onChange}
         type="file"
+        InputLabelProps={{
+            style: {
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              width: '100%',
+              color: 'blue'
+            }
+        }}
     />
 }

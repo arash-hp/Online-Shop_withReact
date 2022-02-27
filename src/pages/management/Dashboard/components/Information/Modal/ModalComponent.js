@@ -17,7 +17,7 @@ import { addProduct, uploadImg } from '../../../../../../api/ProductApi';
 import { useDispatch } from 'react-redux'
 import { createProductAction } from '../../../../../../redux/actions/ProductAction';
 import { ControlCameraSharp } from '@mui/icons-material';
-import { ModalComponent } from '../../../../../../components/index';
+// import { ModalComponent } from '../../../../../../components/index';
 import { FileUploader } from '../../../../../../components/FileUploade';
 
 
@@ -108,11 +108,9 @@ const currencies = [
   },
 ];
 
+const initialValues = { name: "", price: "", count: "", category: "", image: "", thumbnail: "", description: "" };
 
-const initialValues = { name: "", price: "", count: "", category: "", image: "", thumbnail: "", description: "" }
-
-const HeaderProduct = ({ open, onClose, onSubmit }) => {
-
+export const ModalComponent = ({ open, onClose, onSubmit,item }) => {
   // const handleOpen = () => { setOpen(true) };
   // const handleClose = () => setOpen(false);
   // const [open, setOpen] = React.useState(false);
@@ -128,9 +126,9 @@ const HeaderProduct = ({ open, onClose, onSubmit }) => {
 
   const handleChange = (event) => {
     setCurrency(event.target.value);
-    console.log(event.target.value)
   };
 
+  const isAdd = !item;
 
   // const handleFileUpdate = (e) => {
   //   e.preventDefault();
@@ -188,7 +186,7 @@ const HeaderProduct = ({ open, onClose, onSubmit }) => {
 
       {/* </form> */}
       <Formik
-        initialValues={initialValues}
+        initialValues={item || initialValues}
 
         onSubmit={handleSubmit}>
 
@@ -327,5 +325,3 @@ const HeaderProduct = ({ open, onClose, onSubmit }) => {
     </Dialog>
   );
 }
-
-export { HeaderProduct };

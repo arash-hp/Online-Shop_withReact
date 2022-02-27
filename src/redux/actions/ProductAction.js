@@ -42,11 +42,13 @@ export const createProductAction = (data) => {
 }
 
 export const updateProductAction = (data) => {
+    console.log('editAction',data)
+    
     return (dispatch, getState) => {
         return editProduct(data)
             .then(response => {
 
-                console.log('editAction',response)
+                console.log('editAction2',response)
 
                 dispatch(editProductAction(data))
                 return response
