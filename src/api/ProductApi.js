@@ -19,6 +19,8 @@ export async function getProduct() {
      }
    }
    
+  
+   
    export async function deleteProduct(id) {
      try {
        const response = await http.delete(`/products/${id}`);

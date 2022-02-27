@@ -1,17 +1,20 @@
 import { useEffect } from "react";
 import Helmet from "react-helmet";
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getProducts } from "../../../redux/actions/ProductAction";
 import store from "../../../redux/store";
-import {Information } from './components/index'
+import { getCategories } from '../../../redux/actions/CategoryAction';
+import { Information } from './components/index'
 export const DashboardPage = () => {
 
-    
+
 
     const dispatch = useDispatch()
-
-    useEffect(()=>{dispatch(getProducts())},[dispatch])
-
+    useEffect(() => {
+        dispatch(getProducts())
+        dispatch(getCategories())
+    }, [dispatch])
+  
     return <>
         <Helmet>
             <title>

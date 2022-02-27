@@ -1,11 +1,13 @@
 import { combineReducers, createStore ,compose ,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import { ArticleReducer, ProductReducer } from './reducers';
+import { CategoryReducer } from './reducers/CategoryReducer';
 
 
 const reducers = combineReducers({
     article: ArticleReducer,
-    product: ProductReducer
+    product: ProductReducer,
+    category : CategoryReducer,
 })
 
 //this is for devtools extensions

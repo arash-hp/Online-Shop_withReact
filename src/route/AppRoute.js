@@ -45,7 +45,7 @@ export const AppRoute = () => {
             <Route path={PATHS.ORDERS} element={<PrivateRoute
                 Component={() => <OrdersPage />} />} />;
 
-            <Route path={PATHS.LOGIN} element={<PublicRoute
+            <Route path={PATHS.LOGIN} element={<ProtectedRoute
                 Component={() =>
                     <SignInPage />} />} />;
 

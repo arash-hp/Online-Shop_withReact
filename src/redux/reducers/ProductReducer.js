@@ -13,7 +13,7 @@ export const ProductReducer = (state = initialState, action) => {
         case addProductActionType:
             return { ...state, products: [action.payload, ...state.products] };
         case editProductActionType:
-            return { ...state, products: [action.payload, ...state.products] };
+            return { ...state, products: state.products.map((item) => { return (item.id === action.payload.id) ? action.payload : item }) };
         default:
             return state
     }

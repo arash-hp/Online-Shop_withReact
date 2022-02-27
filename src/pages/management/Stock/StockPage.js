@@ -8,7 +8,6 @@ export const StockPage = () => {
                 Page | Stock
             </title>
         </Helmet>
-        <div>StockPage</div>
         <DataTable />
     </>
 }
