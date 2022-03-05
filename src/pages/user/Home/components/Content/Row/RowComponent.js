@@ -32,7 +32,7 @@ export const Row = ({ category }) => {
     }
 
     return <Grid sx={rootStyles} >
-        <Typography variant="h4" pr={5} pt={2} pb={2} >
+        <Typography variant="h5" pl={3} pt={2} pb={2} >
             <Link to={`${PATHS.CATEGORIES}/${category.id}`} >{category.name}</Link>
         </Typography>
         <Grid container sx={rowStyles}>

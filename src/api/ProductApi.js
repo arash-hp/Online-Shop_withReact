@@ -42,8 +42,17 @@ export async function getProduct() {
    
 export async function editProduct(data) {
   try {
-    console.log('api',data);
     const response = await http.put(`/products/${data.id}`,data);
+    return response.data;
+  } catch (e) {
+    return e;
+  }
+}
+
+export async function editStock(data) {
+  try {
+    console.log('apiStock',data);
+    const response = await http.put(`/products/${data[0]}`,data[1]);
     return response.data;
   } catch (e) {
     return e;

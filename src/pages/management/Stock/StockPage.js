@@ -1,22 +1,19 @@
-import { Button, Toolbar, Typography } from "@mui/material";
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import Helmet from "react-helmet";
-import { useDispatch } from "react-redux";
-import { ModalComponent } from "../../../components";
-import { createProductAction } from "../../../redux/actions/ProductAction";
+import { Button, Grid } from "@mui/material";
 import { DataTable } from "./components/DataTable/DataTableComponent";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../../../redux/actions/ProductAction";
+import { getCategories } from "../../../redux/actions/CategoryAction";
+
 
 export const StockPage = () => {
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => { setOpen(true) };
-    const handleClose = useCallback(() => setOpen(false), [setOpen]);
-
-    const dispatch = useDispatch();
-    const onSubmit = React.useCallback((values) => {
-        dispatch(createProductAction(values))
-        handleClose();
-    }, [dispatch, handleClose])
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getProducts())
+        dispatch(getCategories())
+    }, [dispatch])
 
     return <>
         <Helmet>
@@ -24,13 +21,13 @@ export const StockPage = () => {
                 Page | Stock
             </title>
         </Helmet>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <Typography>مدیریت کالاها</Typography>
-            <Button onClick={handleOpen}>افزودن کالا</Button>
-        </Toolbar>
-
-        <DataTable />
-        <ModalComponent open={open} onClose={handleClose} onSubmit={onSubmit} />
-
+        <Grid container>
+            {/* <Grid container item justifyContent={'center'} mt={4}>
+                <Button variant="contained">ذخیره</Button>
+            </Grid> */}
+            <Grid container item>
+                <DataTable />
+            </Grid>
+        </Grid>
     </>
 }

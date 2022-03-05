@@ -382,7 +382,7 @@ import { PATHS } from '../../../../configs/RoutesConfig'
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -521,9 +521,9 @@ export function Header() {
       onClose={handleMenuClose}
     >
       <Link to={PATHS.LOGIN} color='inherit'>
-        <MenuItem onClick={handleMenuClose} textDecoration='none' sx={{ textDecoration: 'none' }}>پروفایل من</MenuItem>
+        <MenuItem onClick={handleMenuClose} textDecoration='none' sx={{ textDecoration: 'none' }}>پنل مدیریت</MenuItem>
       </Link>
-      <MenuItem onClick={handleMenuClose}>پنل مدیریت</MenuItem>
+      <MenuItem onClick={handleMenuClose}>پروفایل من</MenuItem>
     </Menu>
   );
 
@@ -662,7 +662,7 @@ export function Header() {
           ))}
         </List>
         <Divider />
-        <List>
+        {/* <List>
           {['محصولات', 'کفش', 'کاپشن', 'کوله '].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
@@ -671,7 +671,7 @@ export function Header() {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

@@ -16,6 +16,7 @@ const cardStyles = {
     mt: 5,
     boxShadow: 3,
     borderRadius: 4,
+    
 }
 
 export function UserContent({items}) {
@@ -29,12 +30,12 @@ export function UserContent({items}) {
     }, [dispatch])
 
 
-    const param = useParams();
-    const categoriesId = +param.id
-    const data = useSelector((state) => state.product.products);
-    // const categories = useSelector((state) => state.category.items);
-    const item = data.filter((item) => { return item.id === categoriesId })
-    // const category = categories.filter((item) => { return item.id === categoriesId })
+    // const param = useParams();
+    // const categoriesId = +param.id
+    // const data = useSelector((state) => state.product.products);
+    // const item = data.filter((item) => { return item.id === categoriesId })
+
+
 
 
     const useStyles = makeStyles((theme) => ({
@@ -56,16 +57,16 @@ export function UserContent({items}) {
             <Grid className={classes.root}>
             </Grid>
             <Grid item sx={{ margin: 'auto auto', width: 400 }}>
-                <Typography variant="h3" mb={2} >{item.name}</Typography>
-                <Typography variant="h6" mb={2} >گروه : {item.categoryId}</Typography>
-                <Typography variant="h5" mb={2} >قیمت : {item.price}</Typography>
+                <Typography variant="h4" mb={2} >{items.name}</Typography>
+                <Typography variant="h6" mb={2} >گروه : {items.categoryId}</Typography>
+                <Typography variant="h6" mb={2} >قیمت : {items.price}</Typography>
                 <Typography sx={{ width: '400px', mb: 2 }}>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit nesciunt, ipsa praesentium laboriosam fugiat iste corporis dolores dicta rerum iusto.
                 </Typography>
                 <Grid container alignItems='center'>
                     <Grid><Button variant="contained"  >افزودن  به سبد خرید
                     </Button></Grid>
-                    <Grid mr={2}><TextField type="number" label="تعداد" size="small" sx={{ width: '60px' }} /></Grid>
+                    <Grid ml={2}><TextField type="number" label="تعداد" size="small" sx={{ width: '60px' }} /></Grid>
                 </Grid>
             </Grid>
         </Grid>

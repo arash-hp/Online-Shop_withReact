@@ -22,32 +22,22 @@ import { FileUploader } from '../../../../../../components/FileUploade';
 
 
 
+// const currencies = [
+  
 const currencies = [
   {
-    value:
-    {
-      "id": 1,
-      "name": "کفش",
-      "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
-    },
+    value:1
+    ,
     label: 'کفش',
   },
   {
-    value:
-    {
-      "id": 2,
-      "name": "کوله",
-      "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
-    },
+    value:2
+    ,
     label: 'کوله',
   },
   {
-    value:
-    {
-      "id": 3,
-      "name": "کاپشن",
-      "icon": null
-    },
+    value:3
+    ,
     label: 'کاپشن',
   },
   {
@@ -108,7 +98,92 @@ const currencies = [
   },
 ];
 
-const initialValues = { name: "", price: "", count: "", category: "", image: "", thumbnail: "", description: "" };
+//   {
+//     value:
+//     {
+//       "id": 1,
+//       "name": "کفش",
+//       "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
+//     },
+//     label: 'کفش',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 2,
+//       "name": "کوله",
+//       "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
+//     },
+//     label: 'کوله',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 3,
+//       "name": "کاپشن",
+//       "icon": null
+//     },
+//     label: 'کاپشن',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 1004,
+//       "name": "فونت",
+//       "icon": null
+//     }
+//     ,
+//     label: 'فونت',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 1005,
+//       "name": "گرافیک",
+//       "icon": null
+//     }
+//     ,
+//     label: 'گرافیک',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 1006,
+//       "name": "افکت صوتی",
+//       "icon": null
+//     },
+//     label: 'افکت صوتی',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 1007,
+//       "name": "قالب آماده",
+//       "icon": null
+//     },
+//     label: 'قالب آماده',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 1008,
+//       "name": "قالب سایت",
+//       "icon": null
+//     },
+//     label: 'قالب سایت',
+//   },
+//   {
+//     value:
+//     {
+//       "id": 1009,
+//       "name": "پلاگین",
+//       "icon": null
+//     },
+//     label: 'پلاگین',
+//   },
+// ];
+
+const initialValues = { name: "", price: "", count: "", categoryId: "", image: "", thumbnail: "", description: "" };
 
 export const ModalComponent = ({ open, onClose, onSubmit,item }) => {
   // const handleOpen = () => { setOpen(true) };
@@ -157,7 +232,7 @@ export const ModalComponent = ({ open, onClose, onSubmit,item }) => {
 
   const handleSubmit = (values) => {
     console.log('values',values)
-    onSubmit({...values,category:currency,description})
+    onSubmit({...values,categoryId:currency,description})
   }
 
 
@@ -273,13 +348,13 @@ export const ModalComponent = ({ open, onClose, onSubmit,item }) => {
                     type='number'
                   />
                 }}</Field></Grid>
-                <Grid item ><Field name='category'>
+                <Grid item ><Field name='categoryId'>
                   {(fieldProps) => {
                     return <TextField
                       {...fieldProps.field}
                       id="outlined-select-currency"
                       select
-                      name="category"
+                      name="categoryId"
                       label=" دسته بندی را انتخاب کنید ..."
                       value={currency.value}
                       onChange={handleChange}

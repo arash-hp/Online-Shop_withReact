@@ -83,7 +83,7 @@ function createData(name, calories, fat) {
     return { name, calories, fat };
 }
 
-export function DataTable() {
+export function DataTable({handleEdit ,  open}) {
     const data = useSelector((state) => state.product.products)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -106,10 +106,10 @@ export function DataTable() {
             <Table aria-label="custom pagination table">
                 <TableHead>
                     <TableRow>
-                        <TableCell style={{ width: 60 }}>تصویر</TableCell>
-                        <TableCell style={{ width: 260 }}>نام کالا</TableCell>
-                        <TableCell style={{ width: 160 }}>قیمت (ریال)</TableCell>
-                        <TableCell style={{ width: 100 }}>تعداد</TableCell>
+                        <TableCell style={{ width: 260 }}>نام کاربر</TableCell>
+                        <TableCell style={{ width: 160 }}>مجموع قیمت</TableCell>
+                        <TableCell style={{ width: 100 }}>زمان ثبت سفارش</TableCell>
+                        <TableCell style={{ width: 100 }}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -118,11 +118,6 @@ export function DataTable() {
                         : data
                     ).map((row) => (
                         <TableRow key={row.id} >
-                            <TableCell component="th" scope="row" style={{ width: 60 }}>
-                                {/* <Box sx={{ width: 100,height:100}}> */}
-                                <img src={`http://localhost:3003/files/${row.image}`} style={{ width: 30, height: 30, }} />
-                                {/* </Box> */}
-                            </TableCell>
                             <TableCell component="th" style={{ width: 260 }} scope="row">
                             {row.name} {row.brand}
                             </TableCell>
@@ -131,6 +126,9 @@ export function DataTable() {
                             </TableCell>
                             <TableCell style={{ width: 100 }}>
                             {row.count}
+                            </TableCell>
+                            <TableCell style={{ width: 100 }}>
+                            <Button onClick={() => handleEdit(row)}>بررسی سفارش</Button>
                             </TableCell>
                         </TableRow>
                     ))}
