@@ -1,10 +1,13 @@
 import { Grid, Typography, Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { PATHS } from "../../../../configs/RoutesConfig";
 import { getCategories } from "../../../../redux/actions/CategoryAction";
-import { getProducts } from "../../../../redux/actions/ProductAction";
+import { createOrderAction } from "../../../../redux/actions/OrderAction";
+import { getOrders } from "../../../../redux/actions/OrderAction";
+import { addToCartAction } from "../../../../redux/actions/ShoppingCart";
 
 const cardStyles = {
     width: '800px',
@@ -16,28 +19,22 @@ const cardStyles = {
     mt: 5,
     boxShadow: 3,
     borderRadius: 4,
-    
+
 }
 
-export function UserContent({items}) {
 
+export function UserContent({ items }) {
 
-
+    const [count, setCount] = useState(1)
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getProducts())
-        dispatch(getCategories())
-    }, [dispatch])
+    const handleClick = (e) => {
+        dispatch(addToCartAction({ id: items.id, count }))
+    }
 
-
-    // const param = useParams();
-    // const categoriesId = +param.id
-    // const data = useSelector((state) => state.product.products);
-    // const item = data.filter((item) => { return item.id === categoriesId })
-
-
-
-
+    const handleCountChange = (e) => {
+        const value = +e.target.value;
+        setCount(value >= 1 ? value : 1)
+    }
     const useStyles = makeStyles((theme) => ({
 
         root: {
@@ -49,8 +46,6 @@ export function UserContent({items}) {
             color: 'white',
         },
     }));
-
-
     const classes = useStyles();
     return (
         <Grid container sx={{ ...cardStyles }}>
@@ -61,14 +56,15 @@ export function UserContent({items}) {
                 <Typography variant="h6" mb={2} >گروه : {items.categoryId}</Typography>
                 <Typography variant="h6" mb={2} >قیمت : {items.price}</Typography>
                 <Typography sx={{ width: '400px', mb: 2 }}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit nesciunt, ipsa praesentium laboriosam fugiat iste corporis dolores dicta rerum iusto.
+                    {items.description}
                 </Typography>
                 <Grid container alignItems='center'>
-                    <Grid><Button variant="contained"  >افزودن  به سبد خرید
+                    <Grid><Button variant="contained" onClick={handleClick} >افزودن  به سبد خرید
                     </Button></Grid>
-                    <Grid ml={2}><TextField type="number" label="تعداد" size="small" sx={{ width: '60px' }} /></Grid>
+                    <Grid ml={2}><TextField type="number" label="تعداد" size="small" sx={{ width: '60px' }} value={count} onChange={handleCountChange} /></Grid>
                 </Grid>
             </Grid>
         </Grid>
+
     )
 } 

@@ -19,6 +19,7 @@ import { createProductAction } from '../../../../../../redux/actions/ProductActi
 import { ControlCameraSharp } from '@mui/icons-material';
 // import { ModalComponent } from '../../../../../../components/index';
 import { FileUploader } from '../../../../../../components/FileUploade';
+import { ProductCategory } from '../../ProductCategory/ProductCategory';
 
 
 
@@ -232,7 +233,7 @@ export const ModalComponent = ({ open, onClose, onSubmit,item }) => {
 
   const handleSubmit = (values) => {
     console.log('values',values)
-    onSubmit({...values,categoryId:currency,description})
+    onSubmit({...values,description})
   }
 
 
@@ -348,27 +349,8 @@ export const ModalComponent = ({ open, onClose, onSubmit,item }) => {
                     type='number'
                   />
                 }}</Field></Grid>
-                <Grid item ><Field name='categoryId'>
-                  {(fieldProps) => {
-                    return <TextField
-                      {...fieldProps.field}
-                      id="outlined-select-currency"
-                      select
-                      name="categoryId"
-                      label=" دسته بندی را انتخاب کنید ..."
-                      value={currency.value}
-                      onChange={handleChange}
-                      // helperText="لطفا دسته بندی را انتخاب کنید"
-                      sx={{ width: '235px' }}
-                    >
-                      {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  }}
-                </Field>
+                <Grid item >
+                  <ProductCategory />
                 </Grid>
                 <Grid item sx={{ width: '250px' }} >
                   <Field name='description'>

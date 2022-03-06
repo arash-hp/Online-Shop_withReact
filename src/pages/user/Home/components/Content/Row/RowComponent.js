@@ -25,7 +25,6 @@ const rootStyles = {
 export const Row = ({ category }) => {
     const data = useSelector((state) => state.product.products);
     const items = data.filter((item) => item.categoryId === category.id);
-    console.log('categories',category)
 
     if (!items.length) {
         return null

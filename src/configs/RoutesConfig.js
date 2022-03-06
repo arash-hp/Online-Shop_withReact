@@ -2,6 +2,7 @@ export const PATHS = {
     HOME: '/',
     CARD: 'card',
     FINALIZE:'/finalize',
+    SHOPPING_CART:'shopping_cart',
     LOGIN : '/login',
     DASHBOARD:'/dashboard',
     ORDERS:'/orders',

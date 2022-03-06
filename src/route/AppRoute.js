@@ -1,9 +1,9 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { PublicRoute, ProtectedRoute ,PrivateRoute } from "./components";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { PATHS } from "../configs/RoutesConfig";
-import { Home, CardPage, CategoriesPage, FinalizePage, ResultPayingPage, ProductionUserPage } from "../pages/user";
-import { DashboardPage, LoginPage, OrdersPage, SignInPage, StockPage } from '../pages/management/index';
-import {  } from "./components/ProtectRout/ProtectedRouteComponent";
+import { DashboardPage, OrdersPage, SignInPage, StockPage } from '../pages/management/index';
+import { CategoriesPage, FinalizePage, Home, ProductionUserPage, ResultPayingPage, ShoppingCartPage } from "../pages/user";
+import { PrivateRoute, ProtectedRoute, PublicRoute } from "./components";
+import { } from "./components/ProtectRout/ProtectedRouteComponent";
 
 export const AppRoute = () => {
     return (
@@ -11,15 +11,10 @@ export const AppRoute = () => {
             <Route path={PATHS.HOME} element={<PublicRoute
                 Component={() =>
                     <Home />} />} />;
-                    
+
             <Route path={PATHS.PRODUCTION} element={<PublicRoute
                 Component={() =>
                     <ProductionUserPage />} />} />;
-
-            <Route path={PATHS.CARD} element={<PublicRoute
-                Component={() =>
-                    <CardPage />} />} />;
-
             <Route path={PATHS.CATEGORY} element={<PublicRoute
                 Component={() =>
                     <CategoriesPage />} />} />;
@@ -27,6 +22,9 @@ export const AppRoute = () => {
             <Route path={PATHS.FINALIZE} element={<PublicRoute
                 Component={() =>
                     <FinalizePage />} />} />;
+            <Route path={PATHS.SHOPPING_CART} element={<PublicRoute
+                Component={() =>
+                    <ShoppingCartPage />} />} />;
 
             {/* <Route path={PATHS.PRODUCTION} element={<PublicRoute
                 Component={() =>

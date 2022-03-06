@@ -354,31 +354,32 @@
 //     </Box>
 //   );
 // }
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MailIcon from '@mui/icons-material/Mail';
+import MenuIcon from '@mui/icons-material/Menu';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { alpha, Badge, InputBase, Menu, MenuItem } from '@mui/material';
+import MuiAppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import SearchIcon from '@mui/icons-material/Search';
-import { alpha, Badge, InputBase, Menu, MenuItem } from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import { styled, useTheme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PATHS } from '../../../../configs/RoutesConfig'
+import { PATHS } from '../../../../configs/RoutesConfig';
 
 
 
@@ -437,7 +438,7 @@ export function Header() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const orderCount =  useSelector((state)=>state.shoppingCart.length)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -583,6 +584,7 @@ export function Header() {
   );
 
   //==============================================
+
   return (
     <Box>
       <AppBar position="fixed" open={open}>
@@ -619,17 +621,33 @@ export function Header() {
               aria-haspopup="true"
             >لباس</Typography>
           </Box>
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
+          <Box>
+            <Link to={PATHS.SHOPPING_CART} 
+            color='inherit'>
+              <IconButton
+              // aria-controls={menuId}
+              >
+                <Badge
+                  badgeContent={orderCount}
+                  color="error">
+                  <ShoppingCartIcon 
+                  sx={{ color:'white' }}/>
+                </Badge>
+              </IconButton>
+            </Link>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+
         </Toolbar>
       </AppBar>
       <Drawer

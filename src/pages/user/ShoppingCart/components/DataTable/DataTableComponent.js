@@ -1,12 +1,7 @@
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
-import { Button, Grid, TableHead } from '@mui/material';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,10 +9,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import PropTypes from 'prop-types';
-import * as React from 'react';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
 import { useSelector } from 'react-redux';
-import { setOrders } from '../../../../redux/actions/OrderAction';
+import { Button, Grid, TableHead, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { PATHS } from '../../../../../configs/RoutesConfig';
+import { useDispatch } from 'react-redux';
+import { deleteOrderAction } from '../../../../../redux/actions/OrderAction';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -79,22 +82,22 @@ TablePaginationActions.propTypes = {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
 };
-
 function createData(name, calories, fat) {
     return { name, calories, fat };
 }
 
-export function DataTable({ handleEdit }) {
-    const orders = useSelector((state) => {
-        return state.order.orders
-    });
 
+export function DataTable({ open }) {
+    const { cart, products } = useSelector((state) => ({ cart: state.shoppingCart, products: state.product.products }))
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    const items = React.useMemo(() => {
+        return cart.map((item) => ({ ...item, product: products.find((product) => product.id === item.id) }))
+    }, [cart, products])
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - cart.length) : 0;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -105,34 +108,65 @@ export function DataTable({ handleEdit }) {
         setPage(0);
     };
 
+    //================================ Total rows =================================
+
+    function ccyFormat(num) {
+        return `${num.toFixed(1)}`;
+    }
+    function priceRow(qty, unit) {
+        return qty * unit;
+    }
+    function createRow(desc, qty, unit) {
+        const price = priceRow(qty, unit);
+        return { desc, qty, unit, price };
+    }
+    function subtotal(items) {
+        return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);  
+    }
+    // const rows = [
+    //     createRow('Paperclips (Box)', 100, 1.15),
+    //     createRow('Paper (Case)', 10, 45.99),
+    //     createRow('Waste Basket', 2, 17.99),
+    // ];
+    const rows = items.map((item) => createRow(item.product.name, item.count, item.product.price));
+    const TAX_RATE = 0.1;
+    const invoiceSubtotal = subtotal(rows);
+    const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+    const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+    //===================================Delete Item======================
+    const dispatch = useDispatch()
+    const handleDelete = (id) => {
+        dispatch(deleteOrderAction(id))
+    }
+
     return (<Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
         <TableContainer component={Paper} sx={{ m: 5, minWidth: 500 }}>
             <Table aria-label="custom pagination table">
                 <TableHead>
                     <TableRow>
-                        <TableCell style={{ width: 260 }}>نام کاربر</TableCell>
-                        <TableCell style={{ width: 160 }}>مجموع قیمت</TableCell>
-                        <TableCell style={{ width: 100 }}>زمان ثبت سفارش</TableCell>
+                        <TableCell style={{ width: 260 }}>نام کالا</TableCell>
+                        <TableCell style={{ width: 160 }}>قیمت</TableCell>
+                        <TableCell style={{ width: 100 }}>تعداد</TableCell>
                         <TableCell style={{ width: 100 }}></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                        ? orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : orders
+                        ? items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : items
                     ).map((row) => (
                         <TableRow key={row.id} >
                             <TableCell component="th" style={{ width: 260 }} scope="row">
-                                {row.firstName} {row.lastName}
+                                {row.product.name} {row.product.brand}
                             </TableCell>
                             <TableCell style={{ width: 160 }} >
-                                {row.price}
+                                {row.product.price}
                             </TableCell>
                             <TableCell style={{ width: 100 }}>
-                                {new Date(row.createdAt).toString()}
+                                {row.count}
                             </TableCell>
                             <TableCell style={{ width: 100 }}>
-                                <Button onClick={() => handleEdit(row)}>بررسی سفارش</Button>
+                                <Button onClick={() => handleDelete(row.id)}>حذف</Button>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -143,12 +177,36 @@ export function DataTable({ handleEdit }) {
                         </TableRow>
                     )}
                 </TableBody>
-                <TableFooter>
+                <TableFooter >
+                    <TableRow>
+                        <TableCell colSpan={1}>جمع</TableCell>
+                        <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell colSpan={1}>مالیات</TableCell>
+                        <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell colSpan={1}>تخیف</TableCell>
+                        <TableCell align="right">0.0</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell colSpan={1}>جمع کل</TableCell>
+                        <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell sx={{ background: '#93d093', textAlign: 'center' }}>
+                            <Link to={PATHS.FINALIZE}><Button sx={{ width: '100% !important' }}>نهایی  کردن خرید</Button></Link>
+                        </TableCell>
+                        <TableCell sx={{ background: '#dbdbdb', textAlign: 'center' }}>
+                            <Link to={PATHS.HOME}><Button sx={{ width: '100% !important' }}>بازگشت به صفحه اصلی</Button></Link>
+                        </TableCell>
+                    </TableRow>
                     <TableRow>
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                             colSpan={3}
-                            count={orders.length}
+                            count={cart.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             SelectProps={{

@@ -1,25 +1,33 @@
-import { Button, Checkbox, FormControlLabel, FormGroup, Grid, Radio, Typography } from "@mui/material";
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import { Checkbox, FormControlLabel, FormGroup, Grid, Radio, RadioGroup, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Helmet from "react-helmet";
 import { useDispatch } from "react-redux";
-import { getCategories } from "../../../redux/actions/CategoryAction";
-import { getProducts } from "../../../redux/actions/ProductAction";
+import { getOrders } from "../../../redux/actions/OrderAction";
 import { DataTable } from "./DataTable/DataTableComponent";
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import  {ModalComponent} from './Modal/ModalComponent';
-import CheckCircle from '@mui/icons-material/CheckCircle';
+import { ModalComponent } from './Modal/ModalComponent';
 export const OrdersPage = () => {
-    const [item,setItem] = useState(null);
-    const [open , setOpen] = useState(false);
-    const handleOpen = ()=> setOpen(true);
-    const handleClose = ()=> setOpen(false);
+
+
+
+
+
+
+    //=================================
+    const [item, setItem] = useState(null);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+        setOpen(false);
+        setItem(null);
+    }
+
+
 
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getProducts())
-        dispatch(getCategories())
+        dispatch(getOrders())
     }, [dispatch])
 
     const formStyle = {
@@ -28,11 +36,15 @@ export const OrdersPage = () => {
 
     }
 
-    const handleEdit =(item)=>{
+    const handleEdit = (item) => {
         handleOpen()
         setItem(item)
     }
-    
+
+    //================radio button========================
+    const handleChange = (e)=>{
+        console.log('e',e.target.checked)
+    }
     return <>
         <Helmet>
             <title>
@@ -46,14 +58,15 @@ export const OrdersPage = () => {
                 </Grid>
                 <Grid>
                     <FormGroup sx={{ ...formStyle }}>
-                        <FormControlLabel size="small" control={<Checkbox
-                            label="RadioButtonCheckedIcon"
-                            icon={<RadioButtonUncheckedIcon />}
-                            checkedIcon={<RadioButtonCheckedIcon />} />} label="سفارش های تحویل داده شده" />
-                        <FormControlLabel size="small" control={<Checkbox
-                            label="RadioButtonCheckedIcon"
-                            icon={<RadioButtonUncheckedIcon />}
-                            checkedIcon={<RadioButtonCheckedIcon />} />} label="سفارش های در انتظار ارسال" />
+                        <RadioGroup
+                        onChange={handleChange}>
+                            <Grid>
+                                <FormControlLabel size="small"
+                                    control={<Radio />} value="female" label="سفارش های در انتظار ارسال" />
+                                <FormControlLabel size="small"
+                                    control={<Radio />} value="femal" label="سفارش های تحویل داده" />
+                            </Grid>
+                        </RadioGroup>
                     </FormGroup>
                 </Grid>
             </Grid>
@@ -61,7 +74,7 @@ export const OrdersPage = () => {
                 <DataTable handleEdit={handleEdit} />
             </Grid>
             <Grid container >
-                <ModalComponent open={open} onClose={handleClose} />
+                {!open ? null : <ModalComponent open={open} onClose={handleClose} item={item} />}
             </Grid>
         </Grid>
     </>

@@ -111,14 +111,15 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
 };
-export const ModalComponent = ({ open, onClose }) => {
-  const data = useSelector((state) => state.product.products)
+export const ModalComponent = ({ item, open, onClose }) => {
+
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - item.cart.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -151,27 +152,27 @@ export const ModalComponent = ({ open, onClose }) => {
               <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
                 <Grid item sx={{ width: '500px' }}>
                   <Typography>
-                    نام مشتری :
+                    نام مشتری : {item.firstName} {item.lastName}
                   </Typography>
                 </Grid>
                 <Grid item sx={{ width: '500px' }}>
                   <Typography>
-                    آدرس :
+                    آدرس : {item.address}
                   </Typography>
                 </Grid>
                 <Grid item sx={{ width: '500px' }}>
                   <Typography>
-                    تلفن :
+                    تلفن : {item.phoneNumber}
                   </Typography>
                 </Grid>
                 <Grid item sx={{ width: '500px' }}>
                   <Typography>
-                    زمان تحویل :
+                    زمان تحویل : {!item.deliveryDate ? '-' : new Date(item.deliveryDate).toString()}
                   </Typography>
                 </Grid>
                 <Grid item sx={{ width: '500px' }}>
                   <Typography>
-                    زمان سفارش :
+                    زمان سفارش : {new Date(item.createdAt).toString()}
                   </Typography>
                 </Grid>
                 <TableContainer component={Paper} sx={{ m: 5, minWidth: 500 }}>
@@ -185,8 +186,8 @@ export const ModalComponent = ({ open, onClose }) => {
                     </TableHead>
                     <TableBody>
                       {(rowsPerPage > 0
-                        ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : data
+                        ? item.cart.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        : item.cart
                       ).map((row) => (
                         <TableRow key={row.id} >
                           <TableCell component="th" style={{ width: 260 }} scope="row">
@@ -212,7 +213,7 @@ export const ModalComponent = ({ open, onClose }) => {
                         <TablePagination
                           rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                           colSpan={3}
-                          count={data.length}
+                          count={item.cart.length}
                           rowsPerPage={rowsPerPage}
                           page={page}
                           SelectProps={{
@@ -233,13 +234,13 @@ export const ModalComponent = ({ open, onClose }) => {
             </Grid>
           </DialogContent>
           <DialogActions >
-            <Button
+            {!item.delivered ? <Button
               type="submit"
               fullWidth
               variant="contained"
             >
               <Typography variant="h6" sx={{ color: "white" }}>تحویل شد</Typography>
-            </Button>
+            </Button> : null}
           </DialogActions>
         </Form>
       </Formik>
