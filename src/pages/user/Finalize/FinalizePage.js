@@ -21,7 +21,6 @@ const orderSchema = Yup.object().shape({
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
         .required('نام خانوادگی را صحیح وارد کنید'),
-    // email: Yup.string().email('Invalid email').required('Required'),
     phoneNumber: Yup.string()
         .required("required")
         .matches(phoneRegExp, 'Phone number is not valid')
@@ -133,7 +132,6 @@ export const FinalizePage = () => {
                                                         helper={meta.error}
                                                         label="تاریخ تحویل"
                                                         type="date"
-                                                        // defaultValue="2017-05-24"
                                                         sx={{ width: 285 }}
                                                         InputLabelProps={{
                                                             shrink: true,
