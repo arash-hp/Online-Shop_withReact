@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PATHS } from "../configs/RoutesConfig";
 import { DashboardPage, OrdersPage, SignInPage, StockPage } from '../pages/management/index';
-import { CategoriesPage, FinalizePage, Home, ProductionUserPage, ResultPayingPage, ShoppingCartPage } from "../pages/user";
+import { CategoriesPage, FinalizePage, Home, ProductionUserPage, Result, ShoppingCartPage } from "../pages/user";
 import { PrivateRoute, ProtectedRoute, PublicRoute } from "./components";
 import { } from "./components/ProtectRout/ProtectedRouteComponent";
 
@@ -25,15 +25,14 @@ export const AppRoute = () => {
             <Route path={PATHS.SHOPPING_CART} element={<PublicRoute
                 Component={() =>
                     <ShoppingCartPage />} />} />;
+            <Route path={PATHS.RESULT} element={<PublicRoute
+                Component={() =>
+                    <Result />} />} />;
 
             {/* <Route path={PATHS.PRODUCTION} element={<PublicRoute
                 Component={() =>
                     <ProductionUserPage />} />} />; */}
-
-            <Route path={PATHS.RESULT_PAYING} element={<PrivateRoute
-                Component={() =>
-                    <ResultPayingPage />} />} />;
-
+       
             <Route path={PATHS.DASHBOARD} element={<PrivateRoute
                 Component={() => <DashboardPage />} />} />;
 

@@ -377,9 +377,10 @@ import { styled, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../../../configs/RoutesConfig';
+import { getCategories } from '../../../../redux/actions/CategoryAction';
 
 
 
@@ -435,10 +436,29 @@ export function Header() {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [sliderCategories, setSliderCategories] = React.useState('');
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const orderCount =  useSelector((state)=>state.shoppingCart.length)
+  const orderCount = useSelector((state) => state.shoppingCart.length)
+
+  const categories = useSelector((state) => state.category.items);
+  // const category = Object.values(categories).map((item)=>item.name)
+
+
+  // const sliderCategories = categories.map((item) => item.name);
+  // const dispatch = useDispatch()
+  // React.useEffect(() => {
+  //   dispatch(getCategories())
+  // }, [dispatch])
+  // React.useEfect(()=>{
+  //   if(!categories){
+  //     const Category = categories.map((item)=>item)
+  //     setSliderCategories(Category)
+  //   }
+  // },[categories])
+
+  // console.log('sliderCategories',Object.keys(categories).length > 0    && categories);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -613,25 +633,33 @@ export function Header() {
             </Search>
           </Box>
           <Box sx={{ display: 'flex', }}>
-
-            <Typography sx={{ marginRight: '20px', cursor: 'pointer' }} variant='body2' >کوهنوردی</Typography>
+            {Object.values(categories).map(({ name, id }, index) => (
+              <Link to={`${PATHS.CATEGORIES}/${id}`} ><ListItem button key={id}>
+                <ListItemText primary={name} sx={{ color: 'white' }} />
+                {/* <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon> */}
+              </ListItem>
+              </Link>
+            ))}
+            {/* <Typography sx={{ marginRight: '20px', cursor: 'pointer' }} variant='body2' >کوهنوردی</Typography>
             <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}>کمپینگ</Typography>
             <Typography sx={{ marginRight: '20px', cursor: 'pointer' }}
               aria-controls='basic-menu'
               aria-haspopup="true"
-            >لباس</Typography>
+            >لباس</Typography> */}
           </Box>
           <Box>
-            <Link to={PATHS.SHOPPING_CART} 
-            color='inherit'>
+            <Link to={PATHS.SHOPPING_CART}
+              color='inherit'>
               <IconButton
               // aria-controls={menuId}
               >
                 <Badge
                   badgeContent={orderCount}
                   color="error">
-                  <ShoppingCartIcon 
-                  sx={{ color:'white' }}/>
+                  <ShoppingCartIcon
+                    sx={{ color: 'white' }} />
                 </Badge>
               </IconButton>
             </Link>
@@ -670,13 +698,14 @@ export function Header() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['محصولات', 'کفش', 'کاپشن', 'کوله '].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-              <ListItemIcon>
+          {Object.values(categories).map(({ name, id }, index) => (
+            <Link to={`${PATHS.CATEGORIES}/${id}`} ><ListItem button key={id}>
+              <ListItemText primary={name} />
+              {/* <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
+              </ListItemIcon> */}
             </ListItem>
+            </Link>
           ))}
         </List>
         <Divider />
@@ -696,6 +725,6 @@ export function Header() {
       </Main>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+    </Box >
   );
 }

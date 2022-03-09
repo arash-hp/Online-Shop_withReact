@@ -8,7 +8,7 @@ export const PATHS = {
     ORDERS:'/orders',
     STOCK : '/stock',
     // PRODUCT_MANAGEMENT:'/product_management',    
-    RESULT_PAYING:'/result_paying',
+    RESULT:'/result',
     NAVIGATE:'*',
     // PATH
     CATEGORIES: '/categories',

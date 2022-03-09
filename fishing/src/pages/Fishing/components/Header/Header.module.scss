@@ -1,0 +1,73 @@
+$HEADER_BACKGROUND_COLOR: #fff;
+$HEADER_BORDER_RADIUS: 5px;
+$HEADER_HEIGHT: 80px;
+$HEADER_PADDING: 0px 25px;
+$_HEADER_URL_NAME_BACKGROUND_COLOR:#a70707;
+
+
+Header {
+  width: 100%;
+  min-height: $HEADER_HEIGHT;
+  background-color: $HEADER_BACKGROUND_COLOR;
+  border-radius: $HEADER_BORDER_RADIUS;
+  padding: $HEADER_PADDING;
+  overflow: hidden;
+
+  .header {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header_logo_main {
+      figure {
+        width: 140px;
+        height: 100px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .header_title {
+      padding-left:50px ;
+    }
+
+    .header_logo_second {
+      figure {
+        width: 200px;
+        height: 120px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+
+  .url {
+    text-align: center;
+
+    height: 0px;
+
+    &_name {
+
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      color: #f8f8f8;
+      //height: 40px;
+      width: 70%;
+      margin: 0 auto;
+      background-color: $_HEADER_URL_NAME_BACKGROUND_COLOR;
+      border-radius: 50%;
+      padding: 5px 0;
+      height: 70px;
+      transform: translateY(-27px);
+    }
+  }
+}

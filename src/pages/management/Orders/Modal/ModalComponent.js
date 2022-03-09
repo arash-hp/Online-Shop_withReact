@@ -18,6 +18,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import Paper from '@mui/material/Paper';
+import { deliverOrder } from '../../../../api/OrderApi';
+import { deliverOrderAction } from '../../../../redux/actions/OrderAction';
 
 
 // import { ModalComponent } from '../../../../../../components/index';
@@ -113,7 +115,7 @@ TablePaginationActions.propTypes = {
 };
 export const ModalComponent = ({ item, open, onClose }) => {
 
-
+  console.log('modal', item)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -129,10 +131,14 @@ export const ModalComponent = ({ item, open, onClose }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleSubmit = (values) => {
-    console.log('values', values)
-    // onSubmit({...values,category:currency,description})
-  }
+
+  const dispatch = useDispatch()
+  const handleDelivered = React.useCallback(() => {
+    dispatch(deliverOrderAction(item.id))
+    onClose()
+  }, [dispatch, item.id, onClose])
+
+
 
 
   return (
@@ -143,107 +149,102 @@ export const ModalComponent = ({ item, open, onClose }) => {
       <BootstrapDialogTitle id="customized-dialog-title" onClose={onClose}>
         نمایش سفارش
       </BootstrapDialogTitle>
-      <Formik
-
-        onSubmit={handleSubmit}>
-        <Form sx={{ marginLeft: '30px' }}>
-          <DialogContent >
-            <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
-              <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
-                <Grid item sx={{ width: '500px' }}>
-                  <Typography>
-                    نام مشتری : {item.firstName} {item.lastName}
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ width: '500px' }}>
-                  <Typography>
-                    آدرس : {item.address}
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ width: '500px' }}>
-                  <Typography>
-                    تلفن : {item.phoneNumber}
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ width: '500px' }}>
-                  <Typography>
-                    زمان تحویل : {!item.deliveryDate ? '-' : new Date(item.deliveryDate).toString()}
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ width: '500px' }}>
-                  <Typography>
-                    زمان سفارش : {new Date(item.createdAt).toString()}
-                  </Typography>
-                </Grid>
-                <TableContainer component={Paper} sx={{ m: 5, minWidth: 500 }}>
-                  <Table aria-label="custom pagination table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell style={{ width: 260 }}>کالا</TableCell>
-                        <TableCell style={{ width: 160 }}>قیمت</TableCell>
-                        <TableCell style={{ width: 100 }}>تعداد</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {(rowsPerPage > 0
-                        ? item.cart.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        : item.cart
-                      ).map((row) => (
-                        <TableRow key={row.id} >
-                          <TableCell component="th" style={{ width: 260 }} scope="row">
-                            {row.name} {row.brand}
-                          </TableCell>
-                          <TableCell style={{ width: 160 }} >
-                            {row.price}
-                          </TableCell>
-                          <TableCell style={{ width: 100 }}>
-                            {row.count}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-
-                      {emptyRows > 0 && (
-                        <TableRow style={{ height: 53 * emptyRows }}>
-                          <TableCell colSpan={6} />
-                        </TableRow>
-                      )}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                          colSpan={3}
-                          count={item.cart.length}
-                          rowsPerPage={rowsPerPage}
-                          page={page}
-                          SelectProps={{
-                            inputProps: {
-                              'aria-label': 'rows per page',
-                            },
-                            native: true,
-                          }}
-                          onPageChange={handleChangePage}
-                          onRowsPerPageChange={handleChangeRowsPerPage}
-                          ActionsComponent={TablePaginationActions}
-                        />
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
-              </Grid>
+      <DialogContent >
+        <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
+          <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch' }} >
+            <Grid item sx={{ width: '500px' }}>
+              <Typography>
+                نام مشتری : {item.firstName} {item.lastName}
+              </Typography>
             </Grid>
-          </DialogContent>
-          <DialogActions >
-            {!item.delivered ? <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-            >
-              <Typography variant="h6" sx={{ color: "white" }}>تحویل شد</Typography>
-            </Button> : null}
-          </DialogActions>
-        </Form>
-      </Formik>
+            <Grid item sx={{ width: '500px' }}>
+              <Typography>
+                آدرس : {item.address}
+              </Typography>
+            </Grid>
+            <Grid item sx={{ width: '500px' }}>
+              <Typography>
+                تلفن : {item.phoneNumber}
+              </Typography>
+            </Grid>
+            <Grid item sx={{ width: '500px' }}>
+              <Typography>
+                زمان تحویل : {!item.deliveryDate ? '-' : new Date(item.deliveryDate).toLocaleDateString('fa')}
+              </Typography>
+            </Grid>
+            <Grid item sx={{ width: '500px' }}>
+              <Typography>
+                زمان سفارش : {new Date(item.createdAt).toLocaleDateString('fa')}
+              </Typography>
+            </Grid>
+            <TableContainer component={Paper} sx={{ m: 5, minWidth: 500 }}>
+              <Table aria-label="custom pagination table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ width: 260 }}>کالا</TableCell>
+                    <TableCell style={{ width: 160 }}>قیمت</TableCell>
+                    <TableCell style={{ width: 100 }}>تعداد</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(rowsPerPage > 0
+                    ? item.cart.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : item.cart
+                  ).map((row) => (
+                    <TableRow key={row.id} >
+                      <TableCell component="th" style={{ width: 260 }} scope="row">
+                        {row.name} {row.brand}
+                      </TableCell>
+                      <TableCell style={{ width: 160 }} >
+                        {row.price}
+                      </TableCell>
+                      <TableCell style={{ width: 100 }}>
+                        {row.count}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                      colSpan={3}
+                      count={item.cart.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: {
+                          'aria-label': 'rows per page',
+                        },
+                        native: true,
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                      ActionsComponent={TablePaginationActions}
+                    />
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+      </DialogContent>
+      <DialogActions >
+        {!item.delivered ? <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          onClick={handleDelivered}
+        >
+          <Typography variant="h6" sx={{ color: "white" }}>تحویل شد</Typography>
+        </Button> : null}
+      </DialogActions>
     </Dialog>
   );
 }

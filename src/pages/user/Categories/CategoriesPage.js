@@ -13,18 +13,24 @@ export const CategoriesPage = () => {
 
   
     const product = useSelector((state) => state.product.products);
+    const categories = useSelector((state) => state.category.items);
+
 
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getProducts())
+        dispatch(getCategories())
     }, [dispatch])
 
     const param = useParams();
     const categoriesId = +param.id
 
     const result = product.filter((item) => { return item.categoryId === categoriesId })
+    // const categoryTitle = categories.filter((item) => { return item.id === categoriesId })
     // const title = result[0].category.name;
+    // const item = categories.filter((item) => { return item.id === categoriesId })
 
+// console.log('result',categoriesId)
     return <>
         <Helmet>
             <title>
@@ -35,7 +41,7 @@ export const CategoriesPage = () => {
             <Typography>دسته بندی : </Typography>
         </Grid>
         <Grid container justifyContent='center' mt={2}>
-            {result.map((item) => <Link to={`${PATHS.PRODUCTIONS}/${item.id}`}>{<CardComponent key={item.id} item={item} />}</Link>)}
+            {result.map((item) => <Link to={`${PATHS.PRODUCTIONS}/${item.id}`}  key={item.id}>{<CardComponent item={item}  key={item.id}/>}</Link>)}
         </Grid>
     </>
 }

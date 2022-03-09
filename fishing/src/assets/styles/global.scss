@@ -1,0 +1,39 @@
+@import "fonts";
+@import "padding";
+@import "margin";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Vazir-medium' !important;
+
+}
+
+html, body {
+  direction: rtl;
+  font-family: 'Vazir-medium' !important;
+  min-height: 100vh;
+  background-color: #e3dada;
+  //background-image: url("../images/hand2.png");
+  padding: 0 7px;
+}
+
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+
+ul, li {
+  list-style: none;
+}
+
+
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+

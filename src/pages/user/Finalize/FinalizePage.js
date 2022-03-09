@@ -5,6 +5,9 @@ import Helmet from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrderAction, getOrders } from "../../../redux/actions/OrderAction";
 import * as Yup from 'yup';
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Box } from "@mui/system";
 
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -21,15 +24,18 @@ const orderSchema = Yup.object().shape({
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
         .required('نام خانوادگی را صحیح وارد کنید'),
+        address: Yup.string()
+        .min(2, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('آدرس را صحیح وارد کنید'),
     phoneNumber: Yup.string()
-        .required("required")
+        .required("شماره تلفن را صحیح وارد کنید")
         .matches(phoneRegExp, 'Phone number is not valid')
         .min(11, "تعداد ارقام کم  است")
         .max(11, "تعداد ارقام زیاد است"),
-        deliveryDate: Yup.date().min(new Date()
-        // Yup.ref('originalEndDate'),
-        // ({ min }) => `Date needs to be after ${formatDate(newDate)}!!`,
-    )
+    deliveryDate: Yup.date().min(new Date(),'نباید قبل و انتخاب کنید')
+        .required('تاریخ را صحیح وارد کنید')
+
 });
 
 const initialValues = {
@@ -38,6 +44,7 @@ const initialValues = {
     address: '',
     phoneNumber: '',
     deliveryDate: '',
+    delivered: false
 }
 
 export const FinalizePage = () => {
@@ -51,7 +58,10 @@ export const FinalizePage = () => {
         const order = {
             ...values, cart: cart.map((item) => ({ ...products.find((product) => product.id === item.id), count: item.count }))
         }
+        // localStorage.setItem('finalize', JSON.stringify(values))
         dispatch(createOrderAction(order))
+        // toast.success('انجام شد.')
+        // window.location.replace("http://localhost:5500")
     }
 
     return <>
@@ -77,59 +87,59 @@ export const FinalizePage = () => {
                                     <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
                                         <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center' }} >
                                             <Grid item sx={{ width: '300px' }}>
-                                                <Field name='firstName'>{(fieldProps) => {
+                                                <Field name='firstName'>{({ field, meta }) => {
                                                     // console.log('modal', fieldProps)
-                                                    return <TextField
-                                                        {...fieldProps.field}
+                                                    return <><TextField
+                                                        {...field}
+                                                        error={meta.error}
+                                                        helperText={meta.error}
                                                         margin="normal"
                                                         fullWidth
                                                         label="نام خریدار"
-                                                    />
-                                                }}</Field>{errors.firstName && touched.firstName ? (
-                                                    <div>{errors.firstName}</div>
-                                                ) : null}
-                                            </Grid>
+                                                    /></>
+                                                }}</Field> </Grid>
                                             <Grid item sx={{ width: '300px' }}>
-                                                <Field name='lastName'>{(fieldProps) => {
+                                                <Field name='lastName'>{({ field, meta }) => {
                                                     // console.log('modal', fieldProps)
-                                                    return <TextField
-                                                        {...fieldProps.field}
+                                                    return <><TextField
+                                                        {...field}
+                                                        error={meta.error}
+                                                        helperText={meta.error}
                                                         margin="normal"
                                                         fullWidth
                                                         label="نام خانوادگی خریدار"
-                                                    />
-                                                }}</Field>{errors.lastName && touched.lastName ? (
-                                                    <div>{errors.lastName}</div>
-                                                ) : null}
-                                            </Grid>
+                                                    /></>
+                                                }}</Field></Grid>
                                             <Grid item sx={{ width: '300px' }}>
-                                                <Field name='address'>{(fieldProps) => {
+                                                <Field name='address'>{({ field, meta }) => {
                                                     // console.log('modal', fieldProps)
-                                                    return <TextField
-                                                        {...fieldProps.field}
+                                                    return <><TextField
+                                                        {...field}
+                                                        error={meta.error}
+                                                        helperText={meta.error}
                                                         margin="normal"
                                                         fullWidth
                                                         label="آدرس تحویل محصول"
-                                                    />
+                                                    /></>
                                                 }}</Field>
                                             </Grid>
                                             <Grid item sx={{ width: '300px' }}><Field name='phoneNumber' >
-                                                {(fieldProps) => {
-                                                    return <TextField
-                                                        {...fieldProps.field}
+                                                {({ field, meta }) => {
+                                                    return <><TextField
+                                                        {...field}
+                                                        error={meta.error}
+                                                        helperText={meta.error}
                                                         margin="normal"
                                                         fullWidth
                                                         label="شماره تلفن"
-                                                    />
-                                                }}</Field>{errors.phoneNumber && touched.phoneNumber ? (
-                                                    <div>{errors.phoneNumber}</div>
-                                                ) : null}</Grid>
+                                                    /></>
+                                                }}</Field></Grid>
                                             <Grid item sx={{ width: '600px', paddingTop: '28px !important' }}><Field name='deliveryDate'>
-                                                {({field,meta}) => {
-                                                    return  <TextField
+                                                {({ field, meta }) => {
+                                                    return <> <TextField
                                                         {...field}
                                                         error={meta.error}
-                                                        helper={meta.error}
+                                                        helperText={meta.error}
                                                         label="تاریخ تحویل"
                                                         type="date"
                                                         sx={{ width: 285 }}
@@ -137,6 +147,8 @@ export const FinalizePage = () => {
                                                             shrink: true,
                                                         }}
                                                     />
+                                                        
+                                                    </>
                                                 }}
                                             </Field> </Grid>
                                         </Grid>

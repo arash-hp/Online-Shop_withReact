@@ -30,7 +30,7 @@ export const CardComponent = ({ item }) => {
   }
 
   return <Grid item m={1}>
-    <Card sx={{ width: 195, height: 240, }}>
+    <Card sx={{ width: 195, height: 240, }} className={classes.hover} >
      <Link to={`${PATHS.PRODUCTIONS}/${item.id}`}> <Box sx={{ height: "140px", mt: 2, ml: 1, mr: 1 }} className={classes.root}></Box></Link>
       <CardContent
         sx={{ maxHeight: 20 }}

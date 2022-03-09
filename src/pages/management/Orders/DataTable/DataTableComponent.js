@@ -84,13 +84,18 @@ function createData(name, calories, fat) {
     return { name, calories, fat };
 }
 
-export function DataTable({ handleEdit }) {
-    const orders = useSelector((state) => {
-        return state.order.orders
-    });
+export function DataTable({ handleEdit, orders }) {
+    console.log('invoiceSubtotal',orders)
+
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    // const [items, setITems] = React.useState('');
+
+    // React.useMemo(() => {
+    //     orders.map((item) => setITems(item))
+    // }, [])
+    // console.log('dataTable', items)
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -104,6 +109,41 @@ export function DataTable({ handleEdit }) {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    //====================total=============================
+    // const total = async(items){
+        
+    // }
+    // const [items , setItems]= React.useState('')
+    // React.useMemo(()=>{
+    //     const order = orders[0].cart.map((item)=>item)
+    //     setItems(order)
+    // })
+    // const item  = item.map((item)=>item)
+    // console.log('invoiceSubtotal',items)
+
+    //   function ccyFormat(num) {
+    //     return `${num.toFixed(1)}`;
+    // }
+    // function priceRow(qty, unit) {
+    //     return qty * unit;
+    // }
+    // function createRow(desc, qty, unit) {
+    //     const price = priceRow(qty, unit);
+    //     return { desc, qty, unit, price };
+    // }
+    // function subtotal(items) {
+    //     return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+    // }
+
+
+    // const rows = items.cart.map((item) => createRow(item.name, item.count, item.price));
+    // const TAX_RATE = 0.1;
+    // const invoiceSubtotal = subtotal(rows);
+    // const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+    // const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+    // console.log('invoiceSubtotal',invoiceTotal)
+
 
     return (<Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
         <TableContainer component={Paper} sx={{ m: 5, minWidth: 500 }}>
@@ -126,10 +166,10 @@ export function DataTable({ handleEdit }) {
                                 {row.firstName} {row.lastName}
                             </TableCell>
                             <TableCell style={{ width: 160 }} >
-                                {row.price}
+                                {row.cart.map((item)=>item.price * item.count)}
                             </TableCell>
                             <TableCell style={{ width: 100 }}>
-                                {new Date(row.createdAt).toString()}
+                                {new Date(row.createdAt).toLocaleDateString('fa')}
                             </TableCell>
                             <TableCell style={{ width: 100 }}>
                                 <Button onClick={() => handleEdit(row)}>بررسی سفارش</Button>

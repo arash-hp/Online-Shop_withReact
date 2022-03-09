@@ -7,6 +7,7 @@ import { ModalComponent } from './Modal/ModalComponent';
 import { Button, Grid, Toolbar, Typography } from '@mui/material';
 import { createProductAction, deleteProductAction, updateProductAction } from '../../../../../redux/actions/ProductAction';
 import { DataTable } from './DataTable/DataTableComponent';
+import { toast } from 'react-toastify';
 
 export const Information = () => {
 
@@ -29,12 +30,20 @@ export const Information = () => {
   const dispatch = useDispatch();
   const onSubmit = React.useCallback((values) => {
     console.log('table')
-    !item ? dispatch(createProductAction(values)) : dispatch(updateProductAction(values));
+    // !item ? dispatch(createProductAction(values)) : dispatch(updateProductAction(values));
+    if (!item) {
+      dispatch(createProductAction(values))
+      toast.success('عملیات موفق انجام شد.')
+    } else {
+      dispatch(updateProductAction(values))
+      toast.success('عملیات موفق انجام شد.')
+    }
     handleClose();
   }, [dispatch, handleClose, item])
   //========================To Delete Item in table ============================
   const handleDelete = (id) => {
     dispatch(deleteProductAction(id))
+    toast.success('عملیات موفق انجام شد.')
   }
 
   //=======================To Edit  Item in table ==============================

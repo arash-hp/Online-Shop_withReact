@@ -9,7 +9,11 @@ import { DataTable } from "./components/DataTable/DataTableComponent"
 
 export const ShoppingCartPage = () => {
 
-
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getOrders())
+        dispatch(getProducts())
+    }, [dispatch])
     return <>
         <Helmet>
             <title>
@@ -18,7 +22,7 @@ export const ShoppingCartPage = () => {
         </Helmet>
         <Grid container>
             <Grid container>
-                <Typography>سبد خرید</Typography>
+                <Typography ml={5}>سبد خرید</Typography>
             </Grid>
             <DataTable />
         </Grid>

@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { toast } from 'react-toastify';
 import { getProducts } from '../../../redux/actions/ProductAction';
 import store from '../../../redux/store';
-import { Slider } from './components/Slider/SliderComponent';
+import { Slider } from './components/Slider/Slider';
 import {Content} from './components/Content/ContentComponent';
+import { Grid } from "@mui/material";
 
 class HomePage extends Component {
 
@@ -27,9 +28,10 @@ class HomePage extends Component {
             <Helmet>
                 title | Home
             </Helmet>
-            <div>
+            <Grid container>
+                <Slider />
                 <Content />
-            </div>
+            </Grid>
         </>
     }
 

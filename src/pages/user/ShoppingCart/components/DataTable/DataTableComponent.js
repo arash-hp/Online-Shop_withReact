@@ -21,6 +21,8 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../../../../configs/RoutesConfig';
 import { useDispatch } from 'react-redux';
 import { deleteOrderAction } from '../../../../../redux/actions/OrderAction';
+import { toast } from 'react-toastify';
+import { removerFromCartAction } from '../../../../../redux/actions/ShoppingCart';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -95,6 +97,14 @@ export function DataTable({ open }) {
     const items = React.useMemo(() => {
         return cart.map((item) => ({ ...item, product: products.find((product) => product.id === item.id) }))
     }, [cart, products])
+
+    //===================================Delete Item======================
+    const dispatch = useDispatch()
+    const handleDelete = (id) => {
+        dispatch(removerFromCartAction(id))
+    }
+
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - cart.length) : 0;
@@ -121,23 +131,15 @@ export function DataTable({ open }) {
         return { desc, qty, unit, price };
     }
     function subtotal(items) {
-        return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);  
+        return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
     }
-    // const rows = [
-    //     createRow('Paperclips (Box)', 100, 1.15),
-    //     createRow('Paper (Case)', 10, 45.99),
-    //     createRow('Waste Basket', 2, 17.99),
-    // ];
+ 
     const rows = items.map((item) => createRow(item.product.name, item.count, item.product.price));
     const TAX_RATE = 0.1;
     const invoiceSubtotal = subtotal(rows);
     const invoiceTaxes = TAX_RATE * invoiceSubtotal;
     const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-    //===================================Delete Item======================
-    const dispatch = useDispatch()
-    const handleDelete = (id) => {
-        dispatch(deleteOrderAction(id))
-    }
+
 
     return (<Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
         <TableContainer component={Paper} sx={{ m: 5, minWidth: 500 }}>

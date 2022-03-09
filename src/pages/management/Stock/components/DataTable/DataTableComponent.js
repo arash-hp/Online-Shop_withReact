@@ -20,6 +20,7 @@ import { Button, Grid, TableHead, TextField } from '@mui/material';
 import { updateProductAction } from '../../../../../redux/actions/ProductAction';
 import { EditableCell } from './EditableCell/EditableCell';
 import { editStockAction, updateStockAction } from '../../../../../redux/actions/StockAction';
+import { toast } from 'react-toastify';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -146,6 +147,7 @@ export function DataTable() {
     const dispatch = useDispatch();
     const onUpdate = ()=>{
         dispatch(updateStockAction(changes))
+        toast.success('عملیات موفق انجام شد.')
     }
 
     const rows = React.useMemo(() => {

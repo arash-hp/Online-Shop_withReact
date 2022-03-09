@@ -1,3 +1,5 @@
+import { deleteCart } from "../../api/OrderApi";
+
 export const addToCartActionType = 'CART_ADD_ITEM';
 export const removerFromCartActionType = 'CART_REMOVE_ITEM';
 export const clearCartActionType = 'CART_CLEAR_ALL';
@@ -7,3 +9,14 @@ export const addToCartAction = (data) => ({ type: addToCartActionType, payload: 
 export const removerFromCartAction = (id) => ({ type: removerFromCartActionType, payload: id });
 export const clearCartAction = () => ({ type: clearCartActionType });
 export const setCountCartAction = (id, count) => ({ type: clearCartActionType, payload: { id, count } });
+
+
+// export const deleteCartAction = (id) => {
+//     return (dispatch, getState) => {
+//         return deleteCart(id)
+//             .then(response => {
+//                 dispatch(removerFromCartAction(id))
+//                 return response
+//             })
+//     }
+// }

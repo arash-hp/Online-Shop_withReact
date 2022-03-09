@@ -26,3 +26,13 @@ export async function addOrder(data) {
       return e;
     }
   }
+
+   export async function deliverOrder(id) {
+     console.log('apiOrder',id)
+    try {
+      const response = await http.patch(`/orders/${id}`,{delivered:true});
+      return response.data;
+    } catch (e) {
+      return e;
+    }
+  }

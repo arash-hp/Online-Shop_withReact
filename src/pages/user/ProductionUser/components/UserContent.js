@@ -34,7 +34,20 @@ export function UserContent({ items }) {
     const handleCountChange = (e) => {
         const value = +e.target.value;
         setCount(value >= 1 ? value : 1)
+        if(value > items.count ){
+            setCount(items.count)
+        }
+        // setCount(value > items.count ? items.count : value)
     }
+
+    // const maxLengthCheck = (e, num) => {
+    //     console.log(e.target.value > num)
+    //     if (e.target.value > +num) {
+    //         return e.target.value = num
+    //     } else if (e.target.value < 0) {
+    //         return e.target.value = 0
+    //     }
+
     const useStyles = makeStyles((theme) => ({
 
         root: {
@@ -55,9 +68,11 @@ export function UserContent({ items }) {
                 <Typography variant="h4" mb={2} >{items.name}</Typography>
                 <Typography variant="h6" mb={2} >گروه : {items.categoryId}</Typography>
                 <Typography variant="h6" mb={2} >قیمت : {items.price}</Typography>
-                <Typography sx={{ width: '400px', mb: 2 }}>
+                {/* <Typography sx={{ width: '400px', mb: 2 }}>
                     {items.description}
-                </Typography>
+                </Typography> */}
+                <Typography sx={{ width: '400px', mb: 2 }}
+                    dangerouslySetInnerHTML={{ __html: items.description }} />
                 <Grid container alignItems='center'>
                     <Grid><Button variant="contained" onClick={handleClick} >افزودن  به سبد خرید
                     </Button></Grid>

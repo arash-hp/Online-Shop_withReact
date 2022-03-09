@@ -1,0 +1,31 @@
+$font-family-1: 'Vazir';
+$font-url-1: '../fonts/Vazir';
+$font-format-1: 'woff';
+
+
+@font-face {
+  font-family: $font-family-1;
+  src: url("#{$font-url-1}/#{$font-family-1}.woff") format($font-format-1);
+}
+
+
+@font-face {
+  font-family: '#{$font-family-1}-medium';
+  src: url("#{$font-url-1}/#{$font-family-1}-Medium.woff") format($font-format-1);
+}
+
+
+@font-face {
+  font-family: '#{$font-family-1}-bold';
+  src: url("#{$font-url-1}/#{$font-family-1}-Bold.woff") format($font-format-1);
+}
+
+@font-face {
+  font-family: '#{$font-family-1}-Thin';
+  src: url("#{$font-url-1}/#{$font-family-1}-Thin.woff") format($font-format-1);
+}
+
+
+
+
+

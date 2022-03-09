@@ -1,0 +1,28 @@
+$padding-default-size: 5;
+$padding-items: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+.padding {
+  @each $padding-item in $padding-items {
+    &-#{$padding-default-size*$padding-item} {
+      padding: #{$padding-default-size*$padding-item}px!important;
+    }
+    &-t-#{$padding-default-size*$padding-item} {
+      padding-top: #{$padding-default-size*$padding-item}px!important;
+    }
+    &-b-#{$padding-default-size*$padding-item} {
+      padding-bottom: #{$padding-default-size*$padding-item}px!important;
+    }
+    &-l-#{$padding-default-size*$padding-item} {
+      padding-left: #{$padding-default-size*$padding-item}px!important;
+    }
+    &-r-#{$padding-default-size*$padding-item} {
+      padding-right: #{$padding-default-size*$padding-item}px!important;
+    }
+    &-horizontal-#{$padding-default-size*$padding-item} {
+      padding: 0 #{$padding-default-size*$padding-item}px!important;
+    }
+    &-vertical-#{$padding-default-size*$padding-item} {
+      padding: #{$padding-default-size*$padding-item}px 0!important;
+    }
+  }
+}

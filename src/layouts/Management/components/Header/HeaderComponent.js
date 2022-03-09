@@ -37,7 +37,7 @@ export function HeaderComponent() {
     <AppBar position="static">
       <CssBaseline />
       <Toolbar>
-        <Typography variant="h4" className={classes.logo}>
+        <Typography variant="h5" className={classes.logo}>
           پنل مدیریت
         </Typography>
           <div className={classes.navlinks}>
