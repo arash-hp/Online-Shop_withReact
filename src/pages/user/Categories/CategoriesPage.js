@@ -38,7 +38,7 @@ export const CategoriesPage = () => {
             </title>
         </Helmet>
         <Grid container justifyContent='center' mt={2}>
-            <Typography>دسته بندی : </Typography>
+            {/* <Typography>دسته بندی : </Typography> */}
         </Grid>
         <Grid container justifyContent='center' mt={2}>
             {result.map((item) => <Link to={`${PATHS.PRODUCTIONS}/${item.id}`}  key={item.id}>{<CardComponent item={item}  key={item.id}/>}</Link>)}

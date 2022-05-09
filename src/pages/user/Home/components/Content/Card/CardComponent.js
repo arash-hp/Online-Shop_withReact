@@ -43,9 +43,11 @@ export const CardComponent = ({ item }) => {
           <CardActions sx={{ width: 95 }}>
             {/* <Button size="small" onClick={handleClick}>افزودن به سبد خرید</Button> */}
             <IconButton onClick={handleClick}
+           
             >
               <ShoppingCartIcon 
-              color='primary'/>
+              color='primary'
+              sx={{ fontSize: 14 }}/>
             </IconButton>
           </CardActions>
 

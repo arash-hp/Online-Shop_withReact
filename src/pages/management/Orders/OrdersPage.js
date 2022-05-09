@@ -24,11 +24,12 @@ export const OrdersPage = () => {
     const orders = useSelector((state) => state.order.orders);
     const filteredOrders = useMemo((item) => {
         return orders.filter((item) => item.delivered === deliveryStatus)
+
     }, [deliveryStatus, orders])
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getOrders())
-    }, [dispatch])
+    }, [dispatch,setDeliveryStatus])
 
 //     const dispatch = useDispatch()
 //   const handleDelivered = React.useCallback(() => {
@@ -52,16 +53,6 @@ export const OrdersPage = () => {
     const handleChange = (e) => {
         // const { value } = e.target;
         setDeliveryStatus(e.target.value ==='true')
-        // if (value === 'orderIsDone') {
-        //     const result = orders.filter((item) => item.delivered)
-        //     setResult(result)
-        //     console.log('result1', result)
-        // }
-        // if (value === 'order') {
-        //     const result2 = orders.filter((item) => item.delivered === false)
-        //     setResult(result2)
-        //     console.log('result2', result2)
-        // }
     }
     return <>
         <Helmet>

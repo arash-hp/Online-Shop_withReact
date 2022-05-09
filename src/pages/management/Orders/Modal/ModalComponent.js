@@ -19,7 +19,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import Paper from '@mui/material/Paper';
 import { deliverOrder } from '../../../../api/OrderApi';
-import { deliverOrderAction } from '../../../../redux/actions/OrderAction';
+import { deliverOrderAction, getOrders } from '../../../../redux/actions/OrderAction';
 
 
 // import { ModalComponent } from '../../../../../../components/index';

@@ -34,7 +34,7 @@ export function UserContent({ items }) {
     const handleCountChange = (e) => {
         const value = +e.target.value;
         setCount(value >= 1 ? value : 1)
-        if(value > items.count ){
+        if (value > items.count) {
             setCount(items.count)
         }
         // setCount(value > items.count ? items.count : value)
@@ -58,6 +58,9 @@ export function UserContent({ items }) {
             backgroundPosition: 'center',
             color: 'white',
         },
+        count: {
+            cursor: "pointer"
+        }
     }));
     const classes = useStyles();
     return (
@@ -67,16 +70,16 @@ export function UserContent({ items }) {
             <Grid item sx={{ margin: 'auto auto', width: 400 }}>
                 <Typography variant="h4" mb={2} >{items.name}</Typography>
                 <Typography variant="h6" mb={2} >گروه : {items.categoryId}</Typography>
-                <Typography variant="h6" mb={2} >قیمت : {items.price}</Typography>
+                <Typography variant="h6" mb={2} >قیمت : {items.price} تومان</Typography>
                 {/* <Typography sx={{ width: '400px', mb: 2 }}>
                     {items.description}
                 </Typography> */}
-                <Typography sx={{ width: '400px', mb: 2 }}
+                <Typography variant="overline" sx={{ width: '400px', mb: 2 }}
                     dangerouslySetInnerHTML={{ __html: items.description }} />
                 <Grid container alignItems='center'>
                     <Grid><Button variant="contained" onClick={handleClick} >افزودن  به سبد خرید
                     </Button></Grid>
-                    <Grid ml={2}><TextField type="number" label="تعداد" size="small" sx={{ width: '60px' }} value={count} onChange={handleCountChange} /></Grid>
+                    <Grid ml={2} ><TextField  type="number" label="تعداد" size="small" sx={{ width: '60px' }} value={count} onChange={handleCountChange} /></Grid>
                 </Grid>
             </Grid>
         </Grid>

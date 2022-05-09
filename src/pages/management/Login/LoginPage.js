@@ -93,7 +93,7 @@ const LoginComponent = (props) => {
                         type="password"
                         value={formValues.password}
                         onChange={handleInputChange}
-
+                        sx={{marginTop:5}}
                     />
                     <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginTop: 40 }}>
                         Submit

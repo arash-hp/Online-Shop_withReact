@@ -83,7 +83,6 @@ export const FinalizePage = () => {
                         <Form sx={{ marginLeft: '30px' }}>
                             <Grid container justifyContent={'center'}>
                                 <DialogContent >
-
                                     <Grid container direction='column' spacing={2} sx={{ overflow: 'hidden' }}>
                                         <Grid container item spacing={2} sx={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center' }} >
                                             <Grid item sx={{ width: '300px' }}>

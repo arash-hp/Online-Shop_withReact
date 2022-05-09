@@ -50,9 +50,10 @@ export const deleteOrderAction = (id) => {
 export const deliverOrderAction = (id) => {
     
     return (dispatch, getState) => {
-        console.log('orderAction',id)
         return deliverOrder(id)
             .then(response => {
+                console.log("deliverOrderAction",response)
+                dispatch(getOrders())
                 dispatch(deliveredOrderAction(id))
                 return response
             })
